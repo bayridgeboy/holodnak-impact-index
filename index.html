@@ -212,7 +212,7 @@
   });
 
   search.addEventListener('input', render);
-  // Suggestion form logic
+  // Suggestion form logic (send via email)
   const suggestForm = document.getElementById('suggest-form');
   const suggestName = document.getElementById('suggest-name');
   const suggestMsg = document.getElementById('suggest-msg');
@@ -221,12 +221,15 @@
       e.preventDefault();
       const name = suggestName.value.trim();
       if (!name) return;
-      suggestMsg.textContent = `Thank you! Suggestion received: ${name}`;
+      // Replace with your email address
+      const email = 'your@email.com';
+      const subject = encodeURIComponent('HII Suggestion');
+      const body = encodeURIComponent('Suggested person to evaluate: ' + name);
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      suggestMsg.textContent = `Thank you! Your email client should open now.`;
       suggestMsg.style.display = 'inline';
       setTimeout(()=>{ suggestMsg.style.display = 'none'; }, 3500);
       suggestName.value = '';
-      // Optionally: send to backend or log
-      console.log('User suggestion:', name);
     });
   }
   render();
