@@ -17,15 +17,7 @@
   table { width: 100%; border-collapse: collapse; }
   th, td { padding: 10px 8px; border-bottom: 1px solid #1e242b; text-align: right; font-variant-numeric: tabular-nums; }
   th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
-  th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) {
-    position: sticky;
-    left: 0;
-    background: #0f1318;
-    z-index: 10;
-    box-shadow: 2px 0 4px 0 rgba(0,0,0,0.04);
-    /* For Safari/Webkit */
-    will-change: transform;
-  }
+  /* Removed sticky/frozen first column styles */
   th { position: sticky; top: 0; background: #0f1318; cursor: pointer; white-space: nowrap; }
   tr:hover { background: #0f1318; }
   .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; background:#0f1318; border:1px solid #27303a; color:var(--muted); }
