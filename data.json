@@ -1,0 +1,292 @@
+{
+  "version": "v17",
+  "weights": {
+  "prosperity": 0.45,
+  "democracy": 0.10,
+  "scienceTech": 0.35,
+  "space": 0.1
+  },
+  "people": [
+    {
+      "id": "elon-musk",
+      "name": "Elon Musk",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 65,
+          "democracy": 0,
+          "scienceTech": 95,
+          "space": 100
+        },
+        "world": {
+          "prosperity": 80,
+          "democracy": -5,
+          "scienceTech": 90,
+          "space": 100
+        }
+      },
+      "explain": {
+        "prosperity": "Built industries (EVs, batteries, launch) and supply chains.",
+        "democracy": "Limited institutional effect; occasional negative via polarization.",
+        "scienceTech": "Reusable rockets; EV/battery breakthroughs; automation ecosystem.",
+        "space": "Lowered launch costs; routine ISS access; Mars vision."
+      }
+    },
+    {
+      "id": "ronald-reagan",
+      "name": "Ronald Reagan",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 55,
+          "democracy": 25,
+          "scienceTech": 40,
+          "space": 45
+        },
+        "world": {
+          "prosperity": 65,
+          "democracy": 35,
+          "scienceTech": 45,
+          "space": 50
+        }
+      },
+      "explain": {
+        "prosperity": "Market liberalization, anti-inflation stance, investment cycle.",
+        "democracy": "Institutional confidence; coalition leadership in Cold War.",
+        "scienceTech": "Defense R&D spillovers (computing, satellites).",
+        "space": "Sustained Shuttle era; strategic space focus."
+      }
+    },
+    {
+      "id": "mike-bloomberg",
+      "name": "Mike Bloomberg",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 55,
+          "democracy": 10,
+          "scienceTech": 45,
+          "space": 0
+        },
+        "world": {
+          "prosperity": 40,
+          "democracy": 5,
+          "scienceTech": 40,
+          "space": 0
+        }
+      },
+      "explain": {
+        "prosperity": "NYC post\u20119/11 recovery, fiscal discipline, 311/PlaNYC, urban productivity.",
+        "democracy": "Strong institutions; civil-liberty concerns from stop\u2011and\u2011frisk.",
+        "scienceTech": "Open data pioneer; public-health & climate analytics funding.",
+        "space": "No direct role."
+      }
+    },
+    {
+      "id": "john-f-kennedy",
+      "name": "John F. Kennedy",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 20,
+          "democracy": 15,
+          "scienceTech": 60,
+          "space": 78
+        },
+        "world": {
+          "prosperity": 30,
+          "democracy": 10,
+          "scienceTech": 50,
+          "space": 78
+        }
+      },
+      "explain": {
+        "prosperity": "Short tenure; limited macroeconomic change.",
+        "democracy": "Norms upheld; civil-rights impetus.",
+        "scienceTech": "Science funding boom; tech optimism.",
+        "space": "Moon program; crisis restraint; inspiration effect."
+      }
+    },
+    {
+      "id": "benjamin-netanyahu",
+      "name": "Benjamin Netanyahu",
+      "country": "Israel",
+      "scores": {
+        "domestic": {
+          "prosperity": 60,
+          "democracy": -25,
+          "scienceTech": 45,
+          "space": 20
+        },
+        "world": {
+          "prosperity": 40,
+          "democracy": -15,
+          "scienceTech": 25,
+          "space": 15
+        }
+      },
+      "explain": {
+        "prosperity": "High-tech export boom; deterrence-driven stability.",
+        "democracy": "Judicial-reform controversy; polarization.",
+        "scienceTech": "Defense/cyber innovation ecosystem growth.",
+        "space": "Small but growing program; collaborations."
+      }
+    },
+    {
+      "id": "richard-nixon",
+      "name": "Richard Nixon",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 20,
+          "democracy": -30,
+          "scienceTech": 30,
+          "space": 24
+        },
+        "world": {
+          "prosperity": 65,
+          "democracy": -20,
+          "scienceTech": 25,
+          "space": 22
+        }
+      },
+      "explain": {
+        "prosperity": "Mixed economy; inflation pressures.",
+        "democracy": "Watergate damaged norms and trust.",
+        "scienceTech": "Environmental institutions; research continuity.",
+        "space": "Post\u2011Apollo transition; d\u00e9tente."
+      }
+    },
+    {
+      "id": "donald-trump",
+      "name": "Donald Trump",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 25,
+          "democracy": -40,
+          "scienceTech": -10,
+          "space": 55
+        },
+        "world": {
+          "prosperity": 25,
+          "democracy": -30,
+          "scienceTech": -15,
+          "space": 50
+        }
+      },
+      "explain": {
+        "prosperity": "Energy independence & reshoring narrative; tariffs mixed; limited infrastructure.",
+        "democracy": "Institutional strain; 2020 transition conflict.",
+        "scienceTech": "COVID public\u2011health conflict vs vaccine acceleration; defense R&D.",
+        "space": "Space Force; strong commercial space continuity."
+      }
+    },
+    {
+      "id": "peter-the-great",
+      "name": "Peter the Great",
+      "country": "Russia",
+      "scores": {
+        "domestic": {
+          "prosperity": 85,
+          "democracy": -30,
+          "scienceTech": 80,
+          "space": 32
+        },
+        "world": {
+          "prosperity": 20,
+          "democracy": -10,
+          "scienceTech": 25,
+          "space": 10
+        }
+      },
+      "explain": {
+        "prosperity": "Modernized state, trade, navy; durable institutions.",
+        "democracy": "Autocratic; serfdom persisted.",
+        "scienceTech": "Academy of Sciences; engineering/naval math.",
+        "space": "No direct role; foundational science only."
+      }
+    },
+    {
+      "id": "che-guevara",
+      "name": "Che Guevara",
+      "country": "Cuba / Latin America",
+      "scores": {
+        "domestic": {
+          "prosperity": -30,
+          "democracy": -90,
+          "scienceTech": 10,
+          "space": 0
+        },
+        "world": {
+          "prosperity": -10,
+          "democracy": -60,
+          "scienceTech": 5,
+          "space": 0
+        }
+      },
+      "explain": {
+        "prosperity": "Central planning and expropriation harmed output.",
+        "democracy": "One-party rule; repression exported by example.",
+        "scienceTech": "Literacy/medical training improved basics; limited tech.",
+        "space": "None."
+      }
+    },
+    {
+      "id": "karl-marx",
+      "name": "Karl Marx",
+      "country": "Germany",
+      "scores": {
+        "domestic": {
+          "prosperity": -40,
+          "democracy": -60,
+          "scienceTech": 10,
+          "space": 0
+        },
+        "world": {
+          "prosperity": -30,
+          "democracy": -70,
+          "scienceTech": 20,
+          "space": 0
+        }
+      },
+      "explain": {
+        "prosperity": "Critique of capitalism inspired revolutions, but implementations led to economic hardship in many countries.",
+        "democracy": "Advocated for classless society, but real-world applications often resulted in authoritarian regimes.",
+        "scienceTech": "Influenced social sciences and economics, but limited direct impact on technology.",
+        "space": "No direct contribution to space or related fields."
+      },
+      "explain_world": {
+        "prosperity": "Global influence on economic systems, but often associated with stagnation or decline.",
+        "democracy": "Inspired global movements, but frequently led to suppression of political freedoms.",
+        "scienceTech": "Major impact on social theory and academic thought worldwide.",
+        "space": "No global impact on space exploration or technology."
+      }
+    },
+    {
+      "id": "margaret-thatcher",
+      "name": "Margaret Thatcher",
+      "country": "United Kingdom",
+      "scores": {
+        "domestic": {
+          "prosperity": 60,
+          "democracy": 10,
+          "scienceTech": 35,
+          "space": 10
+        },
+        "world": {
+          "prosperity": 55,
+          "democracy": 5,
+          "scienceTech": 30,
+          "space": 5
+        }
+      },
+      "explain": {
+        "prosperity": "Led major economic reforms, privatization, and deregulation.",
+        "democracy": "Strengthened executive power, divisive on labor and civil rights.",
+        "scienceTech": "Promoted R&D but cut some public science funding.",
+        "space": "Limited direct impact; supported UK satellite/defense initiatives."
+      }
+    }
+  ]
+}
