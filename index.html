@@ -67,12 +67,12 @@
       </table>
     </div>
     <div class="foot">Click headers to sort. Click a row to see the rationale.</div>
-    <form id="suggest-form" style="margin:24px 0 0 0; text-align:center;">
-      <label for="suggest-name" style="font-size:15px; color:var(--muted);">Suggest a person to evaluate:</label>
-      <input id="suggest-name" name="suggest-name" type="text" placeholder="Enter name..." style="margin:0 8px; padding:6px 12px; border-radius:6px; border:1px solid #27303a; background:#0f1318; color:var(--fg);">
-      <button type="submit" style="padding:6px 16px; border-radius:6px; border:none; background:var(--accent); color:#222; font-weight:600; cursor:pointer;">Submit</button>
-      <span id="suggest-msg" style="margin-left:12px; color:var(--green); font-size:14px; display:none;"></span>
-    </form>
+    <div style="margin:24px 0 0 0; text-align:center;">
+      <span style="font-size:15px; color:var(--muted);">Suggest a person to evaluate:</span>
+      <span style="margin-left:8px; font-size:15px;">
+        <a href="https://github.com/bayridgeboy/holodnak-impact-index/issues/new" target="_blank" style="color:var(--accent);text-decoration:underline;">Create an issue on GitHub</a>
+      </span>
+    </div>
   </section>
   <aside id="drawer">
     <h2>Select a person</h2>
@@ -212,26 +212,6 @@
   });
 
   search.addEventListener('input', render);
-  // Suggestion form logic (send via email)
-  const suggestForm = document.getElementById('suggest-form');
-  const suggestName = document.getElementById('suggest-name');
-  const suggestMsg = document.getElementById('suggest-msg');
-  if (suggestForm) {
-    suggestForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const name = suggestName.value.trim();
-      if (!name) return;
-      // Replace with your email address
-      const email = 'your@email.com';
-      const subject = encodeURIComponent('HII Suggestion');
-      const body = encodeURIComponent('Suggested person to evaluate: ' + name);
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-      suggestMsg.textContent = `Thank you! Your email client should open now.`;
-      suggestMsg.style.display = 'inline';
-      setTimeout(()=>{ suggestMsg.style.display = 'none'; }, 3500);
-      suggestName.value = '';
-    });
-  }
   render();
 })();
 </script>
