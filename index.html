@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holodnak Impact Index (v17)</title>
+<style>
+  :root { --bg:#0b0d10; --fg:#eaeef2; --muted:#9aa4af; --accent:#7cc4ff; --card:#12161b; --green:#27c93f; --red:#ff5555; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; }
+  header { padding: 20px; border-bottom: 1px solid #1e242b; }
+  header h1 { margin: 0 0 6px 0; font-size: 22px; }
+  header .meta { color: var(--muted); font-size: 13px; }
+  main { display: grid; grid-template-columns: 1fr 360px; gap: 18px; padding: 18px; }
+  @media (max-width: 980px) { main { grid-template-columns: 1fr; } #drawer { order: -1; } }
+  #toolbar { display:flex; gap:10px; align-items: center; margin-bottom: 10px; }
+  #search { flex:1; padding:10px 12px; border-radius: 8px; border:1px solid #27303a; background:#0f1318; color:var(--fg); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 10px 8px; border-bottom: 1px solid #1e242b; text-align: right; font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+  th { position: sticky; top: 0; background: #0f1318; cursor: pointer; white-space: nowrap; }
+  tr:hover { background: #0f1318; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; background:#0f1318; border:1px solid #27303a; color:var(--muted); }
+  .spark { display:inline-block; height:8px; width:100px; background:#1e242b; border-radius:4px; vertical-align:middle; margin-left:6px; }
+  .spark > i { display:block; height:8px; border-radius:4px; background:linear-gradient(90deg, var(--red), var(--green)); }
+  #drawer { background: var(--card); border:1px solid #1e242b; border-radius: 12px; padding: 14px; height: fit-content; position: sticky; top: 18px; }
+  #drawer h2 { margin: 4px 0 12px 0; font-size: 18px; }
+  #drawer .dim { margin: 8px 0 14px; }
+  #drawer .dim h3 { margin: 0 0 6px; font-size: 14px; color: var(--muted); }
+  #drawer .dim p { margin: 0; font-size: 14px; line-height: 1.35; color: #c9d2db; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .hi { font-weight:600; }
+  .foot { color: var(--muted); margin-top: 8px; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Holodnak Impact Index (v17)</h1>
+  <p class="tagline">
+    Measuring human influence on prosperity, democracy, science, and space.
+  </p>
+  <div class="meta">Weights: Prosperity 0.45 · Democracy 0.10 · Science & Tech 0.35 · Space 0.10</div>
+</header>
+<main>
+  <section>
+    <div id="toolbar">
+  <input id="search" type="search" placeholder="Search people or countries… (comma to compare)" aria-label="Search" title="Type multiple names or countries separated by commas to compare (e.g., Elon Musk, Karl Marx)">
+      <span class="pill" id="count"></span>
+    </div>
+    <div style="overflow:auto;">
+      <table id="hii">
+        <thead>
+          <tr>
+            <th data-k="name">Person</th>
+            <th data-k="H_dom">HII-Domestic</th>
+            <th data-k="P_dom">Prosperity</th>
+            <th data-k="D_dom">Democracy</th>
+            <th data-k="S_dom">Science & Tech</th>
+            <th data-k="Sp_dom">Space</th>
+            <th data-k="H_world">HII-World</th>
+            <th data-k="P_world">Prosperity</th>
+            <th data-k="D_world">Democracy</th>
+            <th data-k="S_world">Science & Tech</th>
+            <th data-k="Sp_world">Space</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="foot">Click headers to sort. Click a row to see the rationale.</div>
+    <form id="suggest-form" style="margin:24px 0 0 0; text-align:center;">
+      <label for="suggest-name" style="font-size:15px; color:var(--muted);">Suggest a person to evaluate:</label>
+      <input id="suggest-name" name="suggest-name" type="text" placeholder="Enter name..." style="margin:0 8px; padding:6px 12px; border-radius:6px; border:1px solid #27303a; background:#0f1318; color:var(--fg);">
+      <button type="submit" style="padding:6px 16px; border-radius:6px; border:none; background:var(--accent); color:#222; font-weight:600; cursor:pointer;">Submit</button>
+      <span id="suggest-msg" style="margin-left:12px; color:var(--green); font-size:14px; display:none;"></span>
+    </form>
+  </section>
+  <aside id="drawer">
+    <h2>Select a person</h2>
+    <div class="muted">Click any row to see the per-variable rationale.</div>
+    <div id="details" style="display:none;">
+      <div class="muted" id="who"></div>
+      <div class="dim"><h3>Prosperity</h3><p id="xP"></p></div>
+      <div class="dim"><h3>Democracy</h3><p id="xD"></p></div>
+      <div class="dim"><h3>Science & Tech</h3><p id="xS"></p></div>
+      <div class="dim"><h3>Space</h3><p id="xSp"></p></div>
+    </div>
+  </aside>
+</main>
+<script>
+(async function(){
+  const res = await fetch('data.json');
+  const {weights, people} = await res.json();
+
+  const H = (s, w) => (s.prosperity*w.prosperity + s.democracy*w.democracy + s.scienceTech*w.scienceTech + s.space*w.space);
+  const fmt = x => (Math.round(x*10)/10).toFixed(1);
+  const tbody = document.querySelector('#hii tbody');
+  const count = document.querySelector('#count');
+  const search = document.querySelector('#search');
+
+  let rows = people.map(p => {
+    const H_dom = H(p.scores.domestic, weights);
+    const H_world = H(p.scores.world, weights);
+    return {...p, H_dom, H_world};
+  });
+
+  let sortKey = 'H_world', sortDir = -1;
+
+  function render() {
+    const q = search.value.trim().toLowerCase();
+    let data;
+    if (q.includes(',')) {
+      // Multi-name search: split by comma, trim, filter if any match
+      const terms = q.split(',').map(s => s.trim()).filter(Boolean);
+      data = rows.filter(r => terms.some(term => (r.name + ' ' + r.country).toLowerCase().includes(term)));
+    } else {
+      data = rows.filter(r => (r.name + ' ' + r.country).toLowerCase().includes(q));
+    }
+    data.sort((a,b)=>{
+      const ka = key(a, sortKey), kb = key(b, sortKey);
+      if (ka < kb) return -1*sortDir;
+      if (ka > kb) return  1*sortDir;
+      return 0;
+    });
+    function getFlag(country) {
+      if (!country) return '';
+      const map = {
+        'united states': '🇺🇸', 'usa': '🇺🇸', 'us': '🇺🇸',
+        'russia': '🇷🇺', 'ru': '🇷🇺',
+        'cuba / latin america': '🇨🇺', 'cuba': '🇨🇺', 'cu': '🇨🇺',
+        'israel': '🇮🇱', 'il': '🇮🇱',
+        'china': '🇨🇳', 'cn': '🇨🇳',
+        'india': '🇮🇳', 'in': '🇮🇳',
+        'united kingdom': '🇬🇧', 'uk': '🇬🇧', 'gb': '🇬🇧',
+        'france': '🇫🇷', 'fr': '🇫🇷',
+        'germany': '🇩🇪', 'de': '🇩🇪',
+        'japan': '🇯🇵', 'jp': '🇯🇵',
+        'canada': '🇨🇦', 'ca': '🇨🇦',
+        'brazil': '🇧🇷', 'br': '🇧🇷',
+        'south africa': '🇿🇦', 'za': '🇿🇦',
+        'european union': '🇪🇺', 'eu': '🇪🇺',
+        'turkey': '🇹🇷', 'tr': '🇹🇷',
+        'australia': '🇦🇺', 'au': '🇦🇺',
+        'latin america': '🌎',
+      };
+      const c = country.trim().toLowerCase();
+      // Exact match first
+      if (map[c]) return map[c];
+      // Partial match
+      for (const k in map) {
+        if (c.includes(k)) return map[k];
+      }
+      return '🌐';
+    }
+    tbody.innerHTML = data.map(r => `
+      <tr data-id="${r.id}">
+  <td>${getFlag(r.country)} ${r.name}</td>
+  <td class="hi">${fmt(r.H_dom)} <span class="spark"><i style="width:${Math.min(100, (r.H_dom+40)/125*100)}%;background:${r.H_dom>=0?'var(--green)':'var(--red)'}"></i></span></td>
+        <td>${r.scores.domestic.prosperity}</td>
+        <td>${r.scores.domestic.democracy}</td>
+        <td>${r.scores.domestic.scienceTech}</td>
+        <td>${r.scores.domestic.space}</td>
+  <td class="hi">${fmt(r.H_world)} <span class="spark"><i style="width:${Math.min(100, (r.H_world+40)/125*100)}%;background:${r.H_world>=0?'var(--green)':'var(--red)'}"></i></span></td>
+        <td>${r.scores.world.prosperity}</td>
+        <td>${r.scores.world.democracy}</td>
+        <td>${r.scores.world.scienceTech}</td>
+        <td>${r.scores.world.space}</td>
+      </tr>`).join('');
+    count.textContent = data.length + ' people';
+  }
+
+  function key(obj, k){
+    switch(k){
+      case 'name': return obj.name.toLowerCase();
+      case 'country': return obj.country.toLowerCase();
+      case 'P_dom': return obj.scores.domestic.prosperity;
+      case 'P_world': return obj.scores.world.prosperity;
+      case 'D_dom': return obj.scores.domestic.democracy;
+      case 'D_world': return obj.scores.world.democracy;
+      case 'S_dom': return obj.scores.domestic.scienceTech;
+      case 'S_world': return obj.scores.world.scienceTech;
+      case 'Sp_dom': return obj.scores.domestic.space;
+      case 'Sp_world': return obj.scores.world.space;
+      case 'H_dom': return obj.H_dom;
+      case 'H_world': return obj.H_world;
+      default: return obj.H_world;
+    }
+  }
+
+  // sorting
+  document.querySelectorAll('th').forEach(th => {
+    th.addEventListener('click', () => {
+      const k = th.dataset.k;
+      if (sortKey === k) sortDir *= -1;
+      else { sortKey = k; sortDir = (k.includes('H_') ? -1 : 1); }
+      render();
+    });
+  });
+
+  // details drawer
+  tbody.addEventListener('click', (e)=>{
+    const tr = e.target.closest('tr'); if(!tr) return;
+    const id = tr.getAttribute('data-id');
+    const p = rows.find(x => x.id === id);
+    if (!p) return;
+    document.querySelector('#drawer h2').textContent = p.name;
+    document.querySelector('#who').textContent = p.country + ' • Domestic HII ' + fmt(p.H_dom) + ' • World HII ' + fmt(p.H_world);
+    document.querySelector('#xP').textContent  = p.explain.prosperity;
+    document.querySelector('#xD').textContent  = p.explain.democracy;
+    document.querySelector('#xS').textContent  = p.explain.scienceTech;
+    document.querySelector('#xSp').textContent = p.explain.space;
+    document.querySelector('#details').style.display = 'block';
+  });
+
+  search.addEventListener('input', render);
+  // Suggestion form logic
+  const suggestForm = document.getElementById('suggest-form');
+  const suggestName = document.getElementById('suggest-name');
+  const suggestMsg = document.getElementById('suggest-msg');
+  if (suggestForm) {
+    suggestForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = suggestName.value.trim();
+      if (!name) return;
+      suggestMsg.textContent = `Thank you! Suggestion received: ${name}`;
+      suggestMsg.style.display = 'inline';
+      setTimeout(()=>{ suggestMsg.style.display = 'none'; }, 3500);
+      suggestName.value = '';
+      // Optionally: send to backend or log
+      console.log('User suggestion:', name);
+    });
+  }
+  render();
+})();
+</script>
+</script>
+<footer style="text-align:center; margin-top:40px; font-size:0.9em; color:#777;">
+  © 2025 Stas Holodnak. All rights reserved.<br>
+  Holodnak Impact Index™ (HII)
+</footer>
+</body>
+</html>
