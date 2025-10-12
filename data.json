@@ -69,7 +69,7 @@
           "space": 0
         },
         "world": {
-          "prosperity": 40,
+    "prosperity": 80,
           "democracy": 5,
           "scienceTech": 40,
           "space": 0
@@ -119,7 +119,7 @@
           "space": 20
         },
         "world": {
-          "prosperity": 40,
+    "prosperity": 80,
           "democracy": -15,
           "scienceTech": 25,
           "space": 15
@@ -336,6 +336,31 @@
         "democracy": "Defended election integrity and democratic norms, but faced polarization and institutional challenges.",
         "scienceTech": "Increased funding for science, climate, and technology; promoted semiconductor and clean energy industries.",
         "space": "Continued Artemis and commercial space support, but no major new initiatives."
+      }
+    },
+    {
+      "id": "george-washington",
+      "name": "George Washington",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+    "prosperity": 80,
+          "democracy": 60,
+          "scienceTech": 10,
+          "space": 0
+        },
+        "world": {
+          "prosperity": 30,
+          "democracy": 55,
+          "scienceTech": 8,
+          "space": 0
+        }
+      },
+      "explain": {
+  "prosperity": "Established the United States' economic foundations, stabilized finances, promoted commerce, and set precedents for fiscal responsibility and national credit. His leadership enabled long-term prosperity for the new nation.",
+        "democracy": "Set precedents for peaceful transfer of power, republican governance, and limited executive authority.",
+        "scienceTech": "Supported infrastructure and survey efforts, but limited direct impact on science or technology.",
+        "space": "No direct impact; pre-space era."
       }
     }
   ]
