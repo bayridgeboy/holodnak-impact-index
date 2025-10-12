@@ -18,9 +18,7 @@ The Holodnak Impact Index (HII) is a data-driven dashboard for comparing the inf
 
 ## Usage
 
-1. Open `index.html` in your browser.
-2. Use the search box to filter or compare multiple people (comma-separated).
-3. Click table headers to sort; click a row for detailed rationale.
+- Run https://bayridgeboy.github.io/holodnak-impact-index/
 
 ## Suggest a Name
 
