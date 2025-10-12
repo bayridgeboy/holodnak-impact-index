@@ -312,6 +312,31 @@
         "scienceTech": "Promoted tech startups and AI, invested in research, but France lags global leaders.",
         "space": "Supported ESA and French space sector, but no major new initiatives."
       }
+    },
+    {
+      "id": "joe-biden",
+      "name": "Joe Biden",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 30,
+          "democracy": 5,
+          "scienceTech": 25,
+          "space": 20
+        },
+        "world": {
+          "prosperity": 25,
+          "democracy": 10,
+          "scienceTech": 20,
+          "space": 18
+        }
+      },
+      "explain": {
+        "prosperity": "Oversaw post-pandemic recovery, major infrastructure and climate bills, but faced inflation and economic uncertainty.",
+        "democracy": "Defended election integrity and democratic norms, but faced polarization and institutional challenges.",
+        "scienceTech": "Increased funding for science, climate, and technology; promoted semiconductor and clean energy industries.",
+        "space": "Continued Artemis and commercial space support, but no major new initiatives."
+      }
     }
   ]
 }
