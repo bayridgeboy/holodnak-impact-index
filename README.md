@@ -22,6 +22,10 @@ The Holodnak Impact Index (HII) is a data-driven dashboard for comparing the inf
 2. Use the search box to filter or compare multiple people (comma-separated).
 3. Click table headers to sort; click a row for detailed rationale.
 
+## Suggest a Name
+
+To suggest a new person for evaluation, please open an [issue](../../issues) or submit a pull request on GitHub with the name and any relevant details. Suggestions are welcome!
+
 ## Data
 
 All data is stored in `data.json`. You can add or edit people and their scores directly in this file.
@@ -29,3 +33,4 @@ All data is stored in `data.json`. You can add or edit people and their scores d
 ## License
 
 MIT License. See `LICENSE` for details.
+
