@@ -74,7 +74,8 @@
       </span>
     </div>
   </section>
-  <aside id="drawer">
+  <aside id="drawer" style="position:relative;">
+    <button id="closeDrawer" title="Close" style="position:absolute;top:8px;right:8px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;">&times;</button>
     <h2>Select a person</h2>
     <div class="muted">Click any row to see the per-variable rationale.</div>
     <div id="details" style="display:none;">
@@ -196,6 +197,7 @@
     });
   });
 
+
   // details drawer
   tbody.addEventListener('click', (e)=>{
     const tr = e.target.closest('tr'); if(!tr) return;
@@ -209,6 +211,17 @@
     document.querySelector('#xS').textContent  = p.explain.scienceTech;
     document.querySelector('#xSp').textContent = p.explain.space;
     document.querySelector('#details').style.display = 'block';
+  });
+
+  // close drawer button
+  document.getElementById('closeDrawer').addEventListener('click', function() {
+    document.querySelector('#drawer h2').textContent = 'Select a person';
+    document.querySelector('#who').textContent = '';
+    document.querySelector('#xP').textContent = '';
+    document.querySelector('#xD').textContent = '';
+    document.querySelector('#xS').textContent = '';
+    document.querySelector('#xSp').textContent = '';
+    document.getElementById('details').style.display = 'none';
   });
 
   search.addEventListener('input', render);
