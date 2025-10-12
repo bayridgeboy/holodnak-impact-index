@@ -287,6 +287,31 @@
         "scienceTech": "Promoted R&D but cut some public science funding.",
         "space": "Limited direct impact; supported UK satellite/defense initiatives."
       }
+    },
+    {
+      "id": "emmanuel-macron",
+      "name": "Emmanuel Macron",
+      "country": "France",
+      "scores": {
+        "domestic": {
+          "prosperity": 6.5,
+          "democracy": 7.0,
+          "scienceTech": 6.0,
+          "space": 5.5
+        },
+        "world": {
+          "prosperity": 5.5,
+          "democracy": 6.0,
+          "scienceTech": 5.0,
+          "space": 4.5
+        }
+      },
+      "explain": {
+        "prosperity": "Oversaw economic reforms and labor market changes, with mixed results for growth and unemployment.",
+        "democracy": "Defended liberal democracy in France and the EU, but faced criticism over protests and police response.",
+        "scienceTech": "Promoted tech startups and AI, invested in research, but France lags global leaders.",
+        "space": "Supported ESA and French space sector, but no major new initiatives."
+      }
     }
   ]
 }
