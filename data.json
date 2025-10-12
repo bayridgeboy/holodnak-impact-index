@@ -201,10 +201,85 @@
         }
       },
       "explain": {
-        "prosperity": "Modernized state, trade, navy; durable institutions.",
-        "democracy": "Autocratic; serfdom persisted.",
-        "scienceTech": "Academy of Sciences; engineering/naval math.",
-        "space": "No direct role; foundational science only."
+        "prosperity": "Modernized Russia, expanded trade, built St. Petersburg.",
+        "democracy": "Autocratic reforms, centralized power.",
+        "scienceTech": "Founded Academy of Sciences, imported Western tech.",
+        "space": "No direct impact."
+      }
+    },
+    {
+      "id": "john-lennon",
+      "name": "John Lennon",
+      "country": "United Kingdom",
+      "scores": {
+        "domestic": {
+          "prosperity": 30,
+          "democracy": 15,
+          "scienceTech": 5,
+          "space": 0
+        },
+        "world": {
+          "prosperity": 35,
+          "democracy": 20,
+          "scienceTech": 5,
+          "space": 0
+        }
+      },
+      "explain": {
+        "prosperity": "Major economic impact via music industry, global sales, and cultural exports, but not a direct driver of macroeconomic change.",
+        "democracy": "Advocated for peace, anti-war activism, and civil rights, but with limited direct institutional effect.",
+        "scienceTech": "No direct contributions, but some influence on media technology and recording innovation through The Beatles.",
+        "space": "No direct or indirect impact on space or space policy."
+      }
+    },
+    {
+      "id": "che-guevara",
+      "name": "Che Guevara",
+      "country": "Cuba / Latin America",
+      "scores": {
+        "domestic": {
+          "prosperity": -30,
+          "democracy": -90,
+          "scienceTech": 10,
+          "space": 0
+        },
+        "world": {
+          "prosperity": -10,
+          "democracy": -60,
+          "scienceTech": 5,
+          "space": 0
+        }
+      },
+      "explain": {
+        "prosperity": "Revolutionary icon; economic disruption.",
+        "democracy": "Guerrilla tactics; anti-democratic outcomes.",
+        "scienceTech": "Medical background; limited tech impact.",
+        "space": "No direct role."
+      }
+    },
+    {
+      "id": "john-lennon",
+      "name": "John Lennon",
+      "country": "United Kingdom",
+      "scores": {
+        "domestic": {
+          "prosperity": 30,
+          "democracy": 15,
+          "scienceTech": 5,
+          "space": 0
+        },
+        "world": {
+          "prosperity": 35,
+          "democracy": 20,
+          "scienceTech": 5,
+          "space": 0
+        }
+      },
+      "explain": {
+        "prosperity": "Major economic impact via music industry, global sales, and cultural exports, but not a direct driver of macroeconomic change.",
+        "democracy": "Advocated for peace, anti-war activism, and civil rights, but with limited direct institutional effect.",
+        "scienceTech": "No direct contributions, but some influence on media technology and recording innovation through The Beatles.",
+        "space": "No direct or indirect impact on space or space policy."
       }
     },
     {
