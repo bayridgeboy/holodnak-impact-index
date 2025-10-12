@@ -208,31 +208,6 @@
       }
     },
     {
-      "id": "john-lennon",
-      "name": "John Lennon",
-      "country": "United Kingdom",
-      "scores": {
-        "domestic": {
-          "prosperity": 30,
-          "democracy": 15,
-          "scienceTech": 5,
-          "space": 0
-        },
-        "world": {
-          "prosperity": 35,
-          "democracy": 20,
-          "scienceTech": 5,
-          "space": 0
-        }
-      },
-      "explain": {
-        "prosperity": "Major economic impact via music industry, global sales, and cultural exports, but not a direct driver of macroeconomic change.",
-        "democracy": "Advocated for peace, anti-war activism, and civil rights, but with limited direct institutional effect.",
-        "scienceTech": "No direct contributions, but some influence on media technology and recording innovation through The Beatles.",
-        "space": "No direct or indirect impact on space or space policy."
-      }
-    },
-    {
       "id": "che-guevara",
       "name": "Che Guevara",
       "country": "Cuba / Latin America",
