@@ -1,239 +1,367 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Holodnak Impact Index (v17)</title>
-<style>
-  :root { --bg:#0b0d10; --fg:#eaeef2; --muted:#9aa4af; --accent:#7cc4ff; --card:#12161b; --green:#27c93f; --red:#ff5555; }
-  html, body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; }
-  header { padding: 20px; border-bottom: 1px solid #1e242b; }
-  header h1 { margin: 0 0 6px 0; font-size: 22px; }
-  header .meta { color: var(--muted); font-size: 13px; }
-  main { display: grid; grid-template-columns: 1fr 360px; gap: 18px; padding: 18px; }
-  @media (max-width: 980px) { main { grid-template-columns: 1fr; } #drawer { order: -1; } }
-  #toolbar { display:flex; gap:10px; align-items: center; margin-bottom: 10px; }
-  #search { flex:1; padding:10px 12px; border-radius: 8px; border:1px solid #27303a; background:#0f1318; color:var(--fg); }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { padding: 10px 8px; border-bottom: 1px solid #1e242b; text-align: right; font-variant-numeric: tabular-nums; }
-  th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
-  th { position: sticky; top: 0; background: #0f1318; cursor: pointer; white-space: nowrap; }
-  tr:hover { background: #0f1318; }
-  .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; background:#0f1318; border:1px solid #27303a; color:var(--muted); }
-  .spark { display:inline-block; height:8px; width:100px; background:#1e242b; border-radius:4px; vertical-align:middle; margin-left:6px; }
-  .spark > i { display:block; height:8px; border-radius:4px; background:linear-gradient(90deg, var(--red), var(--green)); }
-  #drawer { background: var(--card); border:1px solid #1e242b; border-radius: 12px; padding: 14px; height: fit-content; position: sticky; top: 18px; }
-  #drawer h2 { margin: 4px 0 12px 0; font-size: 18px; }
-  #drawer .dim { margin: 8px 0 14px; }
-  #drawer .dim h3 { margin: 0 0 6px; font-size: 14px; color: var(--muted); }
-  #drawer .dim p { margin: 0; font-size: 14px; line-height: 1.35; color: #c9d2db; }
-  .muted { color: var(--muted); font-size: 13px; }
-  .hi { font-weight:600; }
-  .foot { color: var(--muted); margin-top: 8px; font-size: 12px; }
-</style>
-</head>
-<body>
-<header>
-  <h1>Holodnak Impact Index (v17)</h1>
-  <p class="tagline">
-    Measuring human influence on prosperity, democracy, science, and space.
-  </p>
-  <div class="meta">Weights: Prosperity 0.45 · Democracy 0.10 · Science & Tech 0.35 · Space 0.10</div>
-</header>
-<main>
-  <section>
-    <div id="toolbar">
-  <input id="search" type="search" placeholder="Search people or countries… (comma to compare)" aria-label="Search" title="Type multiple names or countries separated by commas to compare (e.g., Elon Musk, Karl Marx)">
-      <span class="pill" id="count"></span>
-    </div>
-  <div style="overflow:auto; max-height:60vh; padding-right:18px;">
-      <table id="hii">
-        <thead>
-          <tr>
-            <th data-k="name">Person</th>
-            <th data-k="H_dom">HII-Domestic</th>
-            <th data-k="P_dom">Prosperity</th>
-            <th data-k="D_dom">Democracy</th>
-            <th data-k="S_dom">Science & Tech</th>
-            <th data-k="Sp_dom">Space</th>
-            <th data-k="H_world">HII-World</th>
-            <th data-k="P_world">Prosperity</th>
-            <th data-k="D_world">Democracy</th>
-            <th data-k="S_world">Science & Tech</th>
-            <th data-k="Sp_world">Space</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div class="foot">Click headers to sort. Click a row to see the rationale.</div>
-    <div style="margin:24px 0 0 0; text-align:center;">
-      <span style="font-size:15px; color:var(--muted);">Suggest a person to evaluate:</span>
-      <span style="margin-left:8px; font-size:15px;">
-        <a href="https://github.com/bayridgeboy/holodnak-impact-index/issues/new" target="_blank" style="color:var(--accent);text-decoration:underline;">Create an issue on GitHub</a>
-      </span>
-    </div>
-  </section>
-  <aside id="drawer" style="position:relative;">
-    <button id="closeDrawer" title="Close" style="position:absolute;top:8px;right:8px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;">&times;</button>
-    <h2>Select a person</h2>
-    <div class="muted">Click any row to see the per-variable rationale.</div>
-    <div id="details" style="display:none;">
-      <div class="muted" id="who"></div>
-      <div class="dim"><h3>Prosperity</h3><p id="xP"></p></div>
-      <div class="dim"><h3>Democracy</h3><p id="xD"></p></div>
-      <div class="dim"><h3>Science & Tech</h3><p id="xS"></p></div>
-      <div class="dim"><h3>Space</h3><p id="xSp"></p></div>
-    </div>
-  </aside>
-</main>
-<script>
-(async function(){
-  const res = await fetch('data.json');
-  const {weights, people} = await res.json();
-
-  const H = (s, w) => (s.prosperity*w.prosperity + s.democracy*w.democracy + s.scienceTech*w.scienceTech + s.space*w.space);
-  const fmt = x => (Math.round(x*10)/10).toFixed(1);
-  const tbody = document.querySelector('#hii tbody');
-  const count = document.querySelector('#count');
-  const search = document.querySelector('#search');
-
-  let rows = people.map(p => {
-    const H_dom = H(p.scores.domestic, weights);
-    const H_world = H(p.scores.world, weights);
-    return {...p, H_dom, H_world};
-  });
-
-  let sortKey = 'H_world', sortDir = -1;
-
-  function render() {
-    const q = search.value.trim().toLowerCase();
-    let data;
-    if (q.includes(',')) {
-      // Multi-name search: split by comma, trim, filter if any match
-      const terms = q.split(',').map(s => s.trim()).filter(Boolean);
-      data = rows.filter(r => terms.some(term => (r.name + ' ' + r.country).toLowerCase().includes(term)));
-    } else {
-      data = rows.filter(r => (r.name + ' ' + r.country).toLowerCase().includes(q));
-    }
-    data.sort((a,b)=>{
-      const ka = key(a, sortKey), kb = key(b, sortKey);
-      if (ka < kb) return -1*sortDir;
-      if (ka > kb) return  1*sortDir;
-      return 0;
-    });
-    function getFlag(country) {
-      if (!country) return '';
-      const map = {
-        'united states': '🇺🇸', 'usa': '🇺🇸', 'us': '🇺🇸',
-        'russia': '🇷🇺', 'ru': '🇷🇺',
-        'cuba / latin america': '🇨🇺', 'cuba': '🇨🇺', 'cu': '🇨🇺',
-        'israel': '🇮🇱', 'il': '🇮🇱',
-        'china': '🇨🇳', 'cn': '🇨🇳',
-        'india': '🇮🇳', 'in': '🇮🇳',
-        'united kingdom': '🇬🇧', 'uk': '🇬🇧', 'gb': '🇬🇧',
-        'france': '🇫🇷', 'fr': '🇫🇷',
-        'germany': '🇩🇪', 'de': '🇩🇪',
-        'japan': '🇯🇵', 'jp': '🇯🇵',
-        'canada': '🇨🇦', 'ca': '🇨🇦',
-        'brazil': '🇧🇷', 'br': '🇧🇷',
-        'south africa': '🇿🇦', 'za': '🇿🇦',
-        'european union': '🇪🇺', 'eu': '🇪🇺',
-        'turkey': '🇹🇷', 'tr': '🇹🇷',
-        'australia': '🇦🇺', 'au': '🇦🇺',
-        'latin america': '🌎',
-      };
-      const c = country.trim().toLowerCase();
-      // Exact match first
-      if (map[c]) return map[c];
-      // Partial match
-      for (const k in map) {
-        if (c.includes(k)) return map[k];
+{
+  "version": "v17",
+  "weights": {
+  "prosperity": 0.45,
+  "democracy": 0.10,
+  "scienceTech": 0.35,
+  "space": 0.1
+  },
+  "people": [
+    {
+      "id": "elon-musk",
+      "name": "Elon Musk",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 65,
+          "democracy": 0,
+          "scienceTech": 95,
+          "space": 100
+        },
+        "world": {
+          "prosperity": 80,
+          "democracy": -5,
+          "scienceTech": 90,
+          "space": 100
+        }
+      },
+      "explain": {
+        "prosperity": "Built industries (EVs, batteries, launch) and supply chains.",
+        "democracy": "Limited institutional effect; occasional negative via polarization.",
+        "scienceTech": "Reusable rockets; EV/battery breakthroughs; automation ecosystem.",
+        "space": "Lowered launch costs; routine ISS access; Mars vision."
       }
-      return '🌐';
+    },
+    {
+      "id": "ronald-reagan",
+      "name": "Ronald Reagan",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 55,
+          "democracy": 25,
+          "scienceTech": 40,
+          "space": 45
+        },
+        "world": {
+          "prosperity": 65,
+          "democracy": 35,
+          "scienceTech": 45,
+          "space": 50
+        }
+      },
+      "explain": {
+        "prosperity": "Market liberalization, anti-inflation stance, investment cycle.",
+        "democracy": "Institutional confidence; coalition leadership in Cold War.",
+        "scienceTech": "Defense R&D spillovers (computing, satellites).",
+        "space": "Sustained Shuttle era; strategic space focus."
+      }
+    },
+    {
+      "id": "mike-bloomberg",
+      "name": "Mike Bloomberg",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 55,
+          "democracy": 10,
+          "scienceTech": 45,
+          "space": 0
+        },
+        "world": {
+    "prosperity": 80,
+          "democracy": 5,
+          "scienceTech": 40,
+          "space": 0
+        }
+      },
+      "explain": {
+        "prosperity": "NYC post\u20119/11 recovery, fiscal discipline, 311/PlaNYC, urban productivity.",
+        "democracy": "Strong institutions; civil-liberty concerns from stop\u2011and\u2011frisk.",
+        "scienceTech": "Open data pioneer; public-health & climate analytics funding.",
+        "space": "No direct role."
+      }
+    },
+    {
+      "id": "john-f-kennedy",
+      "name": "John F. Kennedy",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 20,
+          "democracy": 15,
+          "scienceTech": 60,
+          "space": 78
+        },
+        "world": {
+          "prosperity": 30,
+          "democracy": 10,
+          "scienceTech": 50,
+          "space": 78
+        }
+      },
+      "explain": {
+        "prosperity": "Short tenure; limited macroeconomic change.",
+        "democracy": "Norms upheld; civil-rights impetus.",
+        "scienceTech": "Science funding boom; tech optimism.",
+        "space": "Moon program; crisis restraint; inspiration effect."
+      }
+    },
+    {
+      "id": "benjamin-netanyahu",
+      "name": "Benjamin Netanyahu",
+      "country": "Israel",
+      "scores": {
+        "domestic": {
+          "prosperity": 60,
+          "democracy": -25,
+          "scienceTech": 45,
+          "space": 20
+        },
+        "world": {
+    "prosperity": 80,
+          "democracy": -15,
+          "scienceTech": 25,
+          "space": 15
+        }
+      },
+      "explain": {
+        "prosperity": "High-tech export boom; deterrence-driven stability.",
+        "democracy": "Judicial-reform controversy; polarization.",
+        "scienceTech": "Defense/cyber innovation ecosystem growth.",
+        "space": "Small but growing program; collaborations."
+      }
+    },
+    {
+      "id": "richard-nixon",
+      "name": "Richard Nixon",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 20,
+          "democracy": -30,
+          "scienceTech": 30,
+          "space": 24
+        },
+        "world": {
+          "prosperity": 65,
+          "democracy": -20,
+          "scienceTech": 25,
+          "space": 22
+        }
+      },
+      "explain": {
+        "prosperity": "Mixed economy; inflation pressures.",
+        "democracy": "Watergate damaged norms and trust.",
+        "scienceTech": "Environmental institutions; research continuity.",
+        "space": "Post\u2011Apollo transition; d\u00e9tente."
+      }
+    },
+    {
+      "id": "donald-trump",
+      "name": "Donald Trump",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 25,
+          "democracy": -40,
+          "scienceTech": -10,
+          "space": 55
+        },
+        "world": {
+          "prosperity": 25,
+          "democracy": -30,
+          "scienceTech": -15,
+          "space": 50
+        }
+      },
+      "explain": {
+        "prosperity": "Energy independence & reshoring narrative; tariffs mixed; limited infrastructure.",
+        "democracy": "Institutional strain; 2020 transition conflict.",
+        "scienceTech": "COVID public\u2011health conflict vs vaccine acceleration; defense R&D.",
+        "space": "Space Force; strong commercial space continuity."
+      }
+    },
+    {
+      "id": "peter-the-great",
+      "name": "Peter the Great",
+      "country": "Russia",
+      "scores": {
+        "domestic": {
+          "prosperity": 85,
+          "democracy": -30,
+          "scienceTech": 80,
+          "space": 32
+        },
+        "world": {
+          "prosperity": 20,
+          "democracy": -10,
+          "scienceTech": 25,
+          "space": 10
+        }
+      },
+      "explain": {
+        "prosperity": "Modernized state, trade, navy; durable institutions.",
+        "democracy": "Autocratic; serfdom persisted.",
+        "scienceTech": "Academy of Sciences; engineering/naval math.",
+        "space": "No direct role; foundational science only."
+      }
+    },
+    {
+      "id": "che-guevara",
+      "name": "Che Guevara",
+      "country": "Cuba / Latin America",
+      "scores": {
+        "domestic": {
+          "prosperity": -30,
+          "democracy": -90,
+          "scienceTech": 10,
+          "space": 0
+        },
+        "world": {
+          "prosperity": -10,
+          "democracy": -60,
+          "scienceTech": 5,
+          "space": 0
+        }
+      },
+      "explain": {
+        "prosperity": "Central planning and expropriation harmed output.",
+        "democracy": "One-party rule; repression exported by example.",
+        "scienceTech": "Literacy/medical training improved basics; limited tech.",
+        "space": "None."
+      }
+    },
+    {
+      "id": "karl-marx",
+      "name": "Karl Marx",
+      "country": "Germany",
+      "scores": {
+        "domestic": {
+          "prosperity": -40,
+          "democracy": -60,
+          "scienceTech": 10,
+          "space": 0
+        },
+        "world": {
+          "prosperity": -30,
+          "democracy": -70,
+          "scienceTech": 20,
+          "space": 0
+        }
+      },
+      "explain": {
+        "prosperity": "Critique of capitalism inspired revolutions, but implementations led to economic hardship in many countries.",
+        "democracy": "Advocated for classless society, but real-world applications often resulted in authoritarian regimes.",
+        "scienceTech": "Influenced social sciences and economics, but limited direct impact on technology.",
+        "space": "No direct contribution to space or related fields."
+      },
+      "explain_world": {
+        "prosperity": "Global influence on economic systems, but often associated with stagnation or decline.",
+        "democracy": "Inspired global movements, but frequently led to suppression of political freedoms.",
+        "scienceTech": "Major impact on social theory and academic thought worldwide.",
+        "space": "No global impact on space exploration or technology."
+      }
+    },
+    {
+      "id": "margaret-thatcher",
+      "name": "Margaret Thatcher",
+      "country": "United Kingdom",
+      "scores": {
+        "domestic": {
+          "prosperity": 60,
+          "democracy": 10,
+          "scienceTech": 35,
+          "space": 10
+        },
+        "world": {
+          "prosperity": 55,
+          "democracy": 5,
+          "scienceTech": 30,
+          "space": 5
+        }
+      },
+      "explain": {
+        "prosperity": "Led major economic reforms, privatization, and deregulation.",
+        "democracy": "Strengthened executive power, divisive on labor and civil rights.",
+        "scienceTech": "Promoted R&D but cut some public science funding.",
+        "space": "Limited direct impact; supported UK satellite/defense initiatives."
+      }
+    },
+    {
+      "id": "emmanuel-macron",
+      "name": "Emmanuel Macron",
+      "country": "France",
+      "scores": {
+        "domestic": {
+          "prosperity": 6.5,
+          "democracy": 7.0,
+          "scienceTech": 6.0,
+          "space": 5.5
+        },
+        "world": {
+          "prosperity": 5.5,
+          "democracy": 6.0,
+          "scienceTech": 5.0,
+          "space": 4.5
+        }
+      },
+      "explain": {
+        "prosperity": "Oversaw economic reforms and labor market changes, with mixed results for growth and unemployment.",
+        "democracy": "Defended liberal democracy in France and the EU, but faced criticism over protests and police response.",
+        "scienceTech": "Promoted tech startups and AI, invested in research, but France lags global leaders.",
+        "space": "Supported ESA and French space sector, but no major new initiatives."
+      }
+    },
+    {
+      "id": "joe-biden",
+      "name": "Joe Biden",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+          "prosperity": 30,
+          "democracy": 5,
+          "scienceTech": 25,
+          "space": 20
+        },
+        "world": {
+          "prosperity": 25,
+          "democracy": 10,
+          "scienceTech": 20,
+          "space": 18
+        }
+      },
+      "explain": {
+        "prosperity": "Oversaw post-pandemic recovery, major infrastructure and climate bills, but faced inflation and economic uncertainty.",
+        "democracy": "Defended election integrity and democratic norms, but faced polarization and institutional challenges.",
+        "scienceTech": "Increased funding for science, climate, and technology; promoted semiconductor and clean energy industries.",
+        "space": "Continued Artemis and commercial space support, but no major new initiatives."
+      }
+    },
+    {
+      "id": "george-washington",
+      "name": "George Washington",
+      "country": "United States",
+      "scores": {
+        "domestic": {
+    "prosperity": 80,
+          "democracy": 60,
+          "scienceTech": 10,
+          "space": 0
+        },
+        "world": {
+          "prosperity": 30,
+          "democracy": 55,
+          "scienceTech": 8,
+          "space": 0
+        }
+      },
+      "explain": {
+  "prosperity": "Established the United States' economic foundations, stabilized finances, promoted commerce, and set precedents for fiscal responsibility and national credit. His leadership enabled long-term prosperity for the new nation.",
+        "democracy": "Set precedents for peaceful transfer of power, republican governance, and limited executive authority.",
+        "scienceTech": "Supported infrastructure and survey efforts, but limited direct impact on science or technology.",
+        "space": "No direct impact; pre-space era."
+      }
     }
-    tbody.innerHTML = data.map(r => `
-      <tr data-id="${r.id}">
-  <td>${getFlag(r.country)} ${r.name}</td>
-  <td class="hi">${fmt(r.H_dom)} <span class="spark"><i style="width:${Math.min(100, (r.H_dom+40)/125*100)}%;background:${r.H_dom>=0?'var(--green)':'var(--red)'}"></i></span></td>
-        <td>${r.scores.domestic.prosperity}</td>
-        <td>${r.scores.domestic.democracy}</td>
-        <td>${r.scores.domestic.scienceTech}</td>
-        <td>${r.scores.domestic.space}</td>
-  <td class="hi">${fmt(r.H_world)} <span class="spark"><i style="width:${Math.min(100, (r.H_world+40)/125*100)}%;background:${r.H_world>=0?'var(--green)':'var(--red)'}"></i></span></td>
-        <td>${r.scores.world.prosperity}</td>
-        <td>${r.scores.world.democracy}</td>
-        <td>${r.scores.world.scienceTech}</td>
-        <td>${r.scores.world.space}</td>
-      </tr>`).join('');
-    count.textContent = data.length + ' people';
-  }
-
-  function key(obj, k){
-    switch(k){
-      case 'name': return obj.name.toLowerCase();
-      case 'country': return obj.country.toLowerCase();
-      case 'P_dom': return obj.scores.domestic.prosperity;
-      case 'P_world': return obj.scores.world.prosperity;
-      case 'D_dom': return obj.scores.domestic.democracy;
-      case 'D_world': return obj.scores.world.democracy;
-      case 'S_dom': return obj.scores.domestic.scienceTech;
-      case 'S_world': return obj.scores.world.scienceTech;
-      case 'Sp_dom': return obj.scores.domestic.space;
-      case 'Sp_world': return obj.scores.world.space;
-      case 'H_dom': return obj.H_dom;
-      case 'H_world': return obj.H_world;
-      default: return obj.H_world;
-    }
-  }
-
-  // sorting
-  document.querySelectorAll('th').forEach(th => {
-    th.addEventListener('click', () => {
-      const k = th.dataset.k;
-      if (sortKey === k) sortDir *= -1;
-      else { sortKey = k; sortDir = (k.includes('H_') ? -1 : 1); }
-      render();
-    });
-  });
-
-
-  // details drawer
-  tbody.addEventListener('click', (e)=>{
-    const tr = e.target.closest('tr'); if(!tr) return;
-    const id = tr.getAttribute('data-id');
-    const p = rows.find(x => x.id === id);
-    if (!p) return;
-    document.querySelector('#drawer h2').textContent = p.name;
-    document.querySelector('#who').textContent = p.country + ' • Domestic HII ' + fmt(p.H_dom) + ' • World HII ' + fmt(p.H_world);
-    document.querySelector('#xP').textContent  = p.explain.prosperity;
-    document.querySelector('#xD').textContent  = p.explain.democracy;
-    document.querySelector('#xS').textContent  = p.explain.scienceTech;
-    document.querySelector('#xSp').textContent = p.explain.space;
-  document.querySelector('#details').style.display = 'block';
-  // Scroll sidebar into view for mobile usability
-  document.getElementById('drawer').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-
-  // close drawer button
-  document.getElementById('closeDrawer').addEventListener('click', function() {
-    document.querySelector('#drawer h2').textContent = 'Select a person';
-    document.querySelector('#who').textContent = '';
-    document.querySelector('#xP').textContent = '';
-    document.querySelector('#xD').textContent = '';
-    document.querySelector('#xS').textContent = '';
-    document.querySelector('#xSp').textContent = '';
-    document.getElementById('details').style.display = 'none';
-  });
-
-  search.addEventListener('input', render);
-  render();
-})();
-</script>
-</script>
-<footer style="text-align:center; margin-top:40px; font-size:0.9em; color:#777;">
-  © 2025 Stas Holodnak. All rights reserved.<br>
-  Holodnak Impact Index™ (HII)
-</footer>
-</body>
-</html>
+  ]
+}
