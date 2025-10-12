@@ -283,31 +283,6 @@
       }
     },
     {
-      "id": "che-guevara",
-      "name": "Che Guevara",
-      "country": "Cuba / Latin America",
-      "scores": {
-        "domestic": {
-          "prosperity": -30,
-          "democracy": -90,
-          "scienceTech": 10,
-          "space": 0
-        },
-        "world": {
-          "prosperity": -10,
-          "democracy": -60,
-          "scienceTech": 5,
-          "space": 0
-        }
-      },
-      "explain": {
-        "prosperity": "Central planning and expropriation harmed output.",
-        "democracy": "One-party rule; repression exported by example.",
-        "scienceTech": "Literacy/medical training improved basics; limited tech.",
-        "space": "None."
-      }
-    },
-    {
       "id": "karl-marx",
       "name": "Karl Marx",
       "country": "Germany",
