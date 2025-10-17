@@ -31,6 +31,13 @@
   .muted { color: var(--muted); font-size: 13px; }
   .hi { font-weight:600; }
   .foot { color: var(--muted); margin-top: 8px; font-size: 12px; }
+  .sliders { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 16px 0; padding: 16px; background: var(--card); border: 1px solid #1e242b; border-radius: 8px; }
+  .slider-item { display: flex; flex-direction: column; gap: 6px; }
+  .slider-item label { font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+  .slider-item label .weight-value { color: var(--accent); font-weight: 600; }
+  .slider-item input[type="range"] { width: 100%; height: 6px; background: #1e242b; border-radius: 3px; outline: none; -webkit-appearance: none; appearance: none; }
+  .slider-item input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; background: var(--accent); border-radius: 50%; cursor: pointer; }
+  .slider-item input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; background: var(--accent); border-radius: 50%; cursor: pointer; border: none; }
 </style>
 </head>
 <body>
@@ -39,7 +46,37 @@
   <p class="tagline">
     Measuring human influence on prosperity, democracy, science, and space.
   </p>
-  <div class="meta">Weights: Prosperity 0.45 · Democracy 0.10 · Science & Tech 0.35 · Space 0.10</div>
+  <div class="meta" id="weightDisplay">Weights: Prosperity 0.45 · Democracy 0.10 · Science & Tech 0.35 · Space 0.10</div>
+  <div class="sliders">
+    <div class="slider-item">
+      <label>
+        <span>Prosperity</span>
+        <span class="weight-value" id="weight-prosperity">0.45</span>
+      </label>
+      <input type="range" id="slider-prosperity" min="0" max="100" value="45" step="1">
+    </div>
+    <div class="slider-item">
+      <label>
+        <span>Democracy</span>
+        <span class="weight-value" id="weight-democracy">0.10</span>
+      </label>
+      <input type="range" id="slider-democracy" min="0" max="100" value="10" step="1">
+    </div>
+    <div class="slider-item">
+      <label>
+        <span>Science & Tech</span>
+        <span class="weight-value" id="weight-scienceTech">0.35</span>
+      </label>
+      <input type="range" id="slider-scienceTech" min="0" max="100" value="35" step="1">
+    </div>
+    <div class="slider-item">
+      <label>
+        <span>Space</span>
+        <span class="weight-value" id="weight-space">0.10</span>
+      </label>
+      <input type="range" id="slider-space" min="0" max="100" value="10" step="1">
+    </div>
+  </div>
 </header>
 <main>
   <section>
@@ -91,7 +128,10 @@
 <script>
 (async function(){
   const res = await fetch('data.json');
-  const {weights, people} = await res.json();
+  const {weights: defaultWeights, people} = await res.json();
+
+  // Initialize current weights from default
+  let weights = {...defaultWeights};
 
   const H = (s, w) => (s.prosperity*w.prosperity + s.democracy*w.democracy + s.scienceTech*w.scienceTech + s.space*w.space);
   const fmt = x => (Math.round(x*10)/10).toFixed(1);
@@ -99,11 +139,18 @@
   const count = document.querySelector('#count');
   const search = document.querySelector('#search');
 
-  let rows = people.map(p => {
-    const H_dom = H(p.scores.domestic, weights);
-    const H_world = H(p.scores.world, weights);
-    return {...p, H_dom, H_world};
-  });
+  let rows = [];
+
+  function recalculateScores() {
+    rows = people.map(p => {
+      const H_dom = H(p.scores.domestic, weights);
+      const H_world = H(p.scores.world, weights);
+      return {...p, H_dom, H_world};
+    });
+  }
+
+  // Initial calculation
+  recalculateScores();
 
   let sortKey = 'H_world', sortDir = -1;
 
@@ -228,6 +275,41 @@
   });
 
   search.addEventListener('input', render);
+
+  // Slider event handlers
+  function updateWeights() {
+    const prosperityVal = parseInt(document.getElementById('slider-prosperity').value);
+    const democracyVal = parseInt(document.getElementById('slider-democracy').value);
+    const scienceTechVal = parseInt(document.getElementById('slider-scienceTech').value);
+    const spaceVal = parseInt(document.getElementById('slider-space').value);
+    
+    // Convert to decimal (0-1 range)
+    weights.prosperity = prosperityVal / 100;
+    weights.democracy = democracyVal / 100;
+    weights.scienceTech = scienceTechVal / 100;
+    weights.space = spaceVal / 100;
+    
+    // Update display values
+    document.getElementById('weight-prosperity').textContent = weights.prosperity.toFixed(2);
+    document.getElementById('weight-democracy').textContent = weights.democracy.toFixed(2);
+    document.getElementById('weight-scienceTech').textContent = weights.scienceTech.toFixed(2);
+    document.getElementById('weight-space').textContent = weights.space.toFixed(2);
+    
+    // Update the meta display
+    document.getElementById('weightDisplay').textContent = 
+      `Weights: Prosperity ${weights.prosperity.toFixed(2)} · Democracy ${weights.democracy.toFixed(2)} · Science & Tech ${weights.scienceTech.toFixed(2)} · Space ${weights.space.toFixed(2)}`;
+    
+    // Recalculate scores and re-render
+    recalculateScores();
+    render();
+  }
+
+  // Attach event listeners to all sliders
+  document.getElementById('slider-prosperity').addEventListener('input', updateWeights);
+  document.getElementById('slider-democracy').addEventListener('input', updateWeights);
+  document.getElementById('slider-scienceTech').addEventListener('input', updateWeights);
+  document.getElementById('slider-space').addEventListener('input', updateWeights);
+
   render();
 })();
 </script>
