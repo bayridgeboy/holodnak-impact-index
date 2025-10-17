@@ -31,6 +31,13 @@
   .muted { color: var(--muted); font-size: 13px; }
   .hi { font-weight:600; }
   .foot { color: var(--muted); margin-top: 8px; font-size: 12px; }
+  .weight-controls { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .weight-item { display: flex; flex-direction: column; gap: 4px; }
+  .weight-item label { font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+  .weight-item input[type="range"] { width: 100%; height: 6px; border-radius: 3px; background: #1e242b; outline: none; -webkit-appearance: none; appearance: none; cursor: pointer; }
+  .weight-item input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+  .weight-item input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; border: none; }
+  .weight-value { font-weight: 600; color: var(--fg); }
 </style>
 </head>
 <body>
@@ -39,7 +46,37 @@
   <p class="tagline">
     Measuring human influence on prosperity, democracy, science, and space.
   </p>
-  <div class="meta">Weights: Prosperity 0.45 · Democracy 0.10 · Science & Tech 0.35 · Space 0.10</div>
+  <div class="meta" id="weightsDisplay">Weights: Prosperity 0.45 · Democracy 0.10 · Science & Tech 0.35 · Space 0.10</div>
+  <div class="weight-controls">
+    <div class="weight-item">
+      <label>
+        <span>Prosperity</span>
+        <span class="weight-value" id="prosperityValue">0.45</span>
+      </label>
+      <input type="range" id="prosperitySlider" min="0" max="1" step="0.05" value="0.45">
+    </div>
+    <div class="weight-item">
+      <label>
+        <span>Democracy</span>
+        <span class="weight-value" id="democracyValue">0.10</span>
+      </label>
+      <input type="range" id="democracySlider" min="0" max="1" step="0.05" value="0.10">
+    </div>
+    <div class="weight-item">
+      <label>
+        <span>Science & Tech</span>
+        <span class="weight-value" id="scienceTechValue">0.35</span>
+      </label>
+      <input type="range" id="scienceTechSlider" min="0" max="1" step="0.05" value="0.35">
+    </div>
+    <div class="weight-item">
+      <label>
+        <span>Space</span>
+        <span class="weight-value" id="spaceValue">0.10</span>
+      </label>
+      <input type="range" id="spaceSlider" min="0" max="1" step="0.05" value="0.10">
+    </div>
+  </div>
 </header>
 <main>
   <section>
@@ -91,7 +128,9 @@
 <script>
 (async function(){
   const res = await fetch('data.json');
-  const {weights, people} = await res.json();
+  const {weights: initialWeights, people} = await res.json();
+
+  let weights = {...initialWeights};
 
   const H = (s, w) => (s.prosperity*w.prosperity + s.democracy*w.democracy + s.scienceTech*w.scienceTech + s.space*w.space);
   const fmt = x => (Math.round(x*10)/10).toFixed(1);
@@ -106,6 +145,45 @@
   });
 
   let sortKey = 'H_world', sortDir = -1;
+
+  // Update weights display
+  function updateWeightsDisplay() {
+    const display = document.getElementById('weightsDisplay');
+    display.textContent = `Weights: Prosperity ${weights.prosperity.toFixed(2)} · Democracy ${weights.democracy.toFixed(2)} · Science & Tech ${weights.scienceTech.toFixed(2)} · Space ${weights.space.toFixed(2)}`;
+  }
+
+  // Recalculate all scores with new weights
+  function recalculateScores() {
+    rows = people.map(p => {
+      const H_dom = H(p.scores.domestic, weights);
+      const H_world = H(p.scores.world, weights);
+      return {...p, H_dom, H_world};
+    });
+    render();
+  }
+
+  // Setup slider event listeners
+  function setupSliders() {
+    const sliders = [
+      { id: 'prosperitySlider', valueId: 'prosperityValue', key: 'prosperity' },
+      { id: 'democracySlider', valueId: 'democracyValue', key: 'democracy' },
+      { id: 'scienceTechSlider', valueId: 'scienceTechValue', key: 'scienceTech' },
+      { id: 'spaceSlider', valueId: 'spaceValue', key: 'space' }
+    ];
+
+    sliders.forEach(({ id, valueId, key }) => {
+      const slider = document.getElementById(id);
+      const valueDisplay = document.getElementById(valueId);
+      
+      slider.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value);
+        weights[key] = value;
+        valueDisplay.textContent = value.toFixed(2);
+        updateWeightsDisplay();
+        recalculateScores();
+      });
+    });
+  }
 
   function render() {
     const q = search.value.trim().toLowerCase();
@@ -228,6 +306,7 @@
   });
 
   search.addEventListener('input', render);
+  setupSliders();
   render();
 })();
 </script>
