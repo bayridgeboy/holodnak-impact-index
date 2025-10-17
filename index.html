@@ -43,11 +43,19 @@
 </header>
 <main>
   <section>
+    <div id="weights-ui" style="margin-bottom:18px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;">
+      <span style="font-size:15px;color:var(--muted);margin-right:8px;">Adjust weights:</span>
+      <label>Prosperity <input type="number" id="wP" min="0" max="1" step="0.01" style="width:60px;" value="0.45"></label>
+      <label>Democracy <input type="number" id="wD" min="0" max="1" step="0.01" style="width:60px;" value="0.10"></label>
+      <label>Science & Tech <input type="number" id="wS" min="0" max="1" step="0.01" style="width:60px;" value="0.35"></label>
+      <label>Space <input type="number" id="wSp" min="0" max="1" step="0.01" style="width:60px;" value="0.10"></label>
+      <span id="weights-warning" style="color:var(--red);font-size:13px;display:none;margin-left:12px;">Weights must sum to 1.00</span>
+    </div>
     <div id="toolbar">
-  <input id="search" type="search" placeholder="Search people or countries… (comma to compare)" aria-label="Search" title="Type multiple names or countries separated by commas to compare (e.g., Elon Musk, Karl Marx)">
+      <input id="search" type="search" placeholder="Search people or countries… (comma to compare)" aria-label="Search" title="Type multiple names or countries separated by commas to compare (e.g., Elon Musk, Karl Marx)">
       <span class="pill" id="count"></span>
     </div>
-  <div style="overflow:auto; max-height:60vh; padding-right:18px;">
+    <div style="overflow:auto; max-height:60vh; padding-right:18px;">
       <table id="hii">
         <thead>
           <tr>
@@ -89,15 +97,21 @@
   </aside>
 </main>
 <script>
+let weights = { prosperity: 0.45, democracy: 0.10, scienceTech: 0.35, space: 0.10 };
 (async function(){
   const res = await fetch('data.json');
-  const {weights, people} = await res.json();
+  const data = await res.json();
+  if (data.weights) weights = {...data.weights};
+  const people = data.people;
 
-  const H = (s, w) => (s.prosperity*w.prosperity + s.democracy*w.democracy + s.scienceTech*w.scienceTech + s.space*w.space);
   const fmt = x => (Math.round(x*10)/10).toFixed(1);
   const tbody = document.querySelector('#hii tbody');
   const count = document.querySelector('#count');
   const search = document.querySelector('#search');
+
+  function H(s, w) {
+    return s.prosperity*w.prosperity + s.democracy*w.democracy + s.scienceTech*w.scienceTech + s.space*w.space;
+  }
 
   let rows = people.map(p => {
     const H_dom = H(p.scores.domestic, weights);
@@ -108,10 +122,14 @@
   let sortKey = 'H_world', sortDir = -1;
 
   function render() {
+    rows = people.map(p => {
+      const H_dom = H(p.scores.domestic, weights);
+      const H_world = H(p.scores.world, weights);
+      return {...p, H_dom, H_world};
+    });
     const q = search.value.trim().toLowerCase();
     let data;
     if (q.includes(',')) {
-      // Multi-name search: split by comma, trim, filter if any match
       const terms = q.split(',').map(s => s.trim()).filter(Boolean);
       data = rows.filter(r => terms.some(term => (r.name + ' ' + r.country).toLowerCase().includes(term)));
     } else {
@@ -145,9 +163,7 @@
         'latin america': '🌎',
       };
       const c = country.trim().toLowerCase();
-      // Exact match first
       if (map[c]) return map[c];
-      // Partial match
       for (const k in map) {
         if (c.includes(k)) return map[k];
       }
@@ -188,7 +204,6 @@
     }
   }
 
-  // sorting
   document.querySelectorAll('th').forEach(th => {
     th.addEventListener('click', () => {
       const k = th.dataset.k;
@@ -198,25 +213,56 @@
     });
   });
 
-
-  // details drawer
   tbody.addEventListener('click', (e)=>{
     const tr = e.target.closest('tr'); if(!tr) return;
     const id = tr.getAttribute('data-id');
     const p = rows.find(x => x.id === id);
     if (!p) return;
-    document.querySelector('#drawer h2').textContent = p.name;
+    function getFlag(country) {
+      if (!country) return '';
+      const map = {
+        'united states': '🇺🇸', 'usa': '🇺🇸', 'us': '🇺🇸',
+        'russia': '🇷🇺', 'ru': '🇷🇺',
+        'cuba / latin america': '🇨🇺', 'cuba': '🇨🇺', 'cu': '🇨🇺',
+        'israel': '🇮🇱', 'il': '🇮🇱',
+        'china': '🇨🇳', 'cn': '🇨🇳',
+        'india': '🇮🇳', 'in': '🇮🇳',
+        'united kingdom': '🇬🇧', 'uk': '🇬🇧', 'gb': '🇬🇧',
+        'france': '🇫🇷', 'fr': '🇫🇷',
+        'germany': '🇩🇪', 'de': '🇩🇪',
+        'japan': '🇯🇵', 'jp': '🇯🇵',
+        'canada': '🇨🇦', 'ca': '🇨🇦',
+        'brazil': '🇧🇷', 'br': '🇧🇷',
+        'south africa': '🇿🇦', 'za': '🇿🇦',
+        'european union': '🇪🇺', 'eu': '🇪🇺',
+        'turkey': '🇹🇷', 'tr': '🇹🇷',
+        'australia': '🇦🇺', 'au': '🇦🇺',
+        'latin america': '🌎',
+      };
+      const c = country.trim().toLowerCase();
+      if (map[c]) return map[c];
+      for (const k in map) {
+        if (c.includes(k)) return map[k];
+      }
+      return '🌐';
+    }
+    document.querySelector('#drawer h2').innerHTML = getFlag(p.country) + ' ' + p.name;
     document.querySelector('#who').textContent = p.country + ' • Domestic HII ' + fmt(p.H_dom) + ' • World HII ' + fmt(p.H_world);
-    document.querySelector('#xP').textContent  = p.explain.prosperity;
-    document.querySelector('#xD').textContent  = p.explain.democracy;
-    document.querySelector('#xS').textContent  = p.explain.scienceTech;
-    document.querySelector('#xSp').textContent = p.explain.space;
-  document.querySelector('#details').style.display = 'block';
-  // Scroll sidebar into view for mobile usability
-  document.getElementById('drawer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    function explainText(val) {
+      if (typeof val === 'string') return val;
+      if (val && typeof val === 'object') {
+        return `<b>Domestic:</b> ${val.domestic || ''}<br><b>World:</b> ${val.world || ''}`;
+      }
+      return '';
+    }
+    document.querySelector('#xP').innerHTML  = explainText(p.explain.prosperity);
+    document.querySelector('#xD').innerHTML  = explainText(p.explain.democracy);
+    document.querySelector('#xS').innerHTML  = explainText(p.explain.scienceTech);
+    document.querySelector('#xSp').innerHTML = explainText(p.explain.space);
+    document.querySelector('#details').style.display = 'block';
+    document.getElementById('drawer').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  // close drawer button
   document.getElementById('closeDrawer').addEventListener('click', function() {
     document.querySelector('#drawer h2').textContent = 'Select a person';
     document.querySelector('#who').textContent = '';
@@ -228,6 +274,44 @@
   });
 
   search.addEventListener('input', render);
+
+  // Weights UI logic
+  function updateWeights() {
+    const wP = parseFloat(document.getElementById('wP').value);
+    const wD = parseFloat(document.getElementById('wD').value);
+    const wS = parseFloat(document.getElementById('wS').value);
+    const wSp = parseFloat(document.getElementById('wSp').value);
+    const sum = wP + wD + wS + wSp;
+    if (Math.abs(sum - 1) > 0.01) {
+      document.getElementById('weights-warning').style.display = '';
+      return;
+    } else {
+      document.getElementById('weights-warning').style.display = 'none';
+    }
+    weights = { prosperity: wP, democracy: wD, scienceTech: wS, space: wSp };
+    // Find largest weight and set sortKey to its world column
+    const weightMap = [
+      { key: 'P_world', value: wP },
+      { key: 'D_world', value: wD },
+      { key: 'S_world', value: wS },
+      { key: 'Sp_world', value: wSp }
+    ];
+    weightMap.sort((a, b) => b.value - a.value);
+    sortKey = weightMap[0].key;
+    sortDir = -1;
+    render();
+  }
+  document.getElementById('wP').addEventListener('input', updateWeights);
+  document.getElementById('wD').addEventListener('input', updateWeights);
+  document.getElementById('wS').addEventListener('input', updateWeights);
+  document.getElementById('wSp').addEventListener('input', updateWeights);
+
+  // Initialize weights UI with loaded weights
+  document.getElementById('wP').value = weights.prosperity;
+  document.getElementById('wD').value = weights.democracy;
+  document.getElementById('wS').value = weights.scienceTech;
+  document.getElementById('wSp').value = weights.space;
+
   render();
 })();
 </script>
