@@ -25,12 +25,24 @@
           "space": 100
         }
       },
-      "explain": {
-        "prosperity": "Built industries (EVs, batteries, launch) and supply chains.",
-        "democracy": "Limited institutional effect; occasional negative via polarization.",
-        "scienceTech": "Reusable rockets; EV/battery breakthroughs; automation ecosystem.",
-        "space": "Lowered launch costs; routine ISS access; Mars vision."
-      }
+        "explain": {
+          "prosperity": {
+            "domestic": "Transformed US auto/energy sectors.",
+            "world": "Globalized EVs and renewables supply chains; scaled exports and international manufacturing and investment partnerships."
+          },
+          "democracy": {
+            "domestic": "Polarizing figure, challenged US norms.",
+            "world": "Influenced global debate on free speech."
+          },
+          "scienceTech": {
+            "domestic": "Led US rocket/EV innovation, automation.",
+            "world": "Set global standards for tech/space."
+          },
+          "space": {
+            "domestic": "Made US launches routine, Mars vision.",
+            "world": "Lowered global launch costs, ISS access."
+          }
+        }
     },
     {
       "id": "ronald-reagan",
@@ -50,12 +62,24 @@
           "space": 50
         }
       },
-      "explain": {
-        "prosperity": "Market liberalization, anti-inflation stance, investment cycle.",
-        "democracy": "Institutional confidence; coalition leadership in Cold War.",
-        "scienceTech": "Defense R&D spillovers (computing, satellites).",
-        "space": "Sustained Shuttle era; strategic space focus."
-      }
+        "explain": {
+          "prosperity": {
+            "domestic": "Cut taxes, deregulated, grew US economy.",
+            "world": "Exported free-market reforms that influenced international trade policy and capital flows."
+          },
+          "democracy": {
+            "domestic": "Restored US confidence, Cold War unity.",
+            "world": "Supported democracy in Eastern Europe."
+          },
+          "scienceTech": {
+            "domestic": "Boosted defense R&D, tech spillovers.",
+            "world": "Spread US tech influence worldwide."
+          },
+          "space": {
+            "domestic": "Sustained Shuttle, strategic focus.",
+            "world": "US space leadership, global inspiration."
+          }
+        }
     },
     {
       "id": "mike-bloomberg",
@@ -76,10 +100,22 @@
         }
       },
       "explain": {
-        "prosperity": "NYC post\u20119/11 recovery, fiscal discipline, 311/PlaNYC, urban productivity.",
-        "democracy": "Strong institutions; civil-liberty concerns from stop\u2011and\u2011frisk.",
-        "scienceTech": "Open data pioneer; public-health & climate analytics funding.",
-        "space": "No direct role."
+        "prosperity": {
+          "domestic": "NYC post–9/11 recovery, fiscal discipline, 311/PlaNYC, urban productivity.",
+          "world": "Used philanthropy and data platforms to shape urban policy, climate finance, and cross-border city partnerships."
+        },
+        "democracy": {
+          "domestic": "Strong institutions; civil-liberty concerns from stop–and–frisk.",
+          "world": "Supported global democracy and public health through philanthropy."
+        },
+        "scienceTech": {
+          "domestic": "Open data pioneer; public-health & climate analytics funding.",
+          "world": "Promoted data-driven governance and global health analytics."
+        },
+        "space": {
+          "domestic": "No direct role.",
+          "world": "No direct role."
+        }
       }
     },
     {
@@ -101,10 +137,10 @@
         }
       },
       "explain": {
-        "prosperity": "Short tenure; limited macroeconomic change.",
-        "democracy": "Norms upheld; civil-rights impetus.",
-        "scienceTech": "Science funding boom; tech optimism.",
-        "space": "Moon program; crisis restraint; inspiration effect."
+          "prosperity": { "domestic": "Short tenure; limited macroeconomic change.", "world": "Boosted US economic diplomacy and aid initiatives that encouraged investment and cooperation among allied nations." },
+          "democracy": { "domestic": "Advanced civil rights; set new norms.", "world": "Promoted democracy abroad; Cold War influence." },
+          "scienceTech": { "domestic": "Science funding boom; tech optimism.", "world": "Set global tech race; inspired international collaboration." },
+          "space": { "domestic": "Launched Apollo; national unity boost.", "world": "Sparked global space race; inspired worldwide." }
       }
     },
     {
@@ -125,12 +161,24 @@
           "space": 15
         }
       },
-      "explain": {
-        "prosperity": "High-tech export boom; deterrence-driven stability.",
-        "democracy": "Judicial-reform controversy; polarization.",
-        "scienceTech": "Defense/cyber innovation ecosystem growth.",
-        "space": "Small but growing program; collaborations."
-      }
+        "explain": {
+          "prosperity": {
+            "domestic": "Led Israel’s tech boom, economic growth.",
+            "world": "Raised Israel's global tech exports and FDI through startup scale-ups and international partnerships; significant defense and cyber exports and diaspora networks amplified economic linkages beyond Israel's size."
+          },
+          "democracy": {
+            "domestic": "Judicial reform, domestic polarization.",
+            "world": "Controversial figure in global democracy debates."
+          },
+          "scienceTech": {
+            "domestic": "Expanded defense/cyber innovation at home.",
+            "world": "Exported Israeli tech, global security impact."
+          },
+          "space": {
+            "domestic": "Supported Israel’s small space program.",
+            "world": "Encouraged international space partnerships."
+          }
+        }
     },
     {
       "id": "richard-nixon",
@@ -151,10 +199,10 @@
         }
       },
       "explain": {
-        "prosperity": "Mixed economy; inflation pressures.",
-        "democracy": "Watergate damaged norms and trust.",
-        "scienceTech": "Environmental institutions; research continuity.",
-        "space": "Post\u2011Apollo transition; d\u00e9tente."
+  "prosperity": {"domestic": "Mixed economy; inflation, wage controls.", "world": "Opened China to US trade and diplomacy, reshaping global markets and long-term investment flows."},
+        "democracy": {"domestic": "Watergate scandal; trust erosion.", "world": "Global skepticism of US democracy."},
+        "scienceTech": {"domestic": "Founded EPA; science continuity.", "world": "US environmental model influenced abroad."},
+        "space": {"domestic": "Ended Apollo; budget cuts.", "world": "US–Soviet détente; global space cooperation."}
       }
     },
     {
@@ -176,10 +224,10 @@
         }
       },
       "explain": {
-        "prosperity": "Energy independence & reshoring narrative; tariffs mixed; limited infrastructure.",
-        "democracy": "Institutional strain; 2020 transition conflict.",
-        "scienceTech": "COVID public\u2011health conflict vs vaccine acceleration; defense R&D.",
-        "space": "Space Force; strong commercial space continuity."
+  "prosperity": {"domestic": "Tax cuts, deregulation, trade wars.", "world": "Reshaped global trade through tariffs and bilateral deals, affecting supply chains and foreign investment patterns."},
+        "democracy": {"domestic": "2020 transition conflict; norm stress.", "world": "Global rise in populist rhetoric."},
+        "scienceTech": {"domestic": "COVID response split; vaccine push.", "world": "US stance shaped global pandemic debate."},
+        "space": {"domestic": "Launched Space Force; NASA funding.", "world": "US commercial space set global pace."}
       }
     },
     {
@@ -201,10 +249,10 @@
         }
       },
       "explain": {
-        "prosperity": "Modernized Russia, expanded trade, built St. Petersburg.",
-        "democracy": "Autocratic reforms, centralized power.",
-        "scienceTech": "Founded Academy of Sciences, imported Western tech.",
-        "space": "No direct impact."
+  "prosperity": {"domestic": "Modernized Russia; built St. Petersburg.", "world": "Prompted regional modernization, trade expansion, and maritime influence among neighboring states."},
+        "democracy": {"domestic": "Centralized power; autocratic rule.", "world": "Model for later autocrats abroad."},
+        "scienceTech": {"domestic": "Founded Academy; imported Western tech.", "world": "Spread Western science to Russia’s neighbors."},
+        "space": {"domestic": "No direct space impact.", "world": "No global space effect."}
       }
     },
     {
@@ -225,38 +273,53 @@
           "space": 0
         }
       },
-      "explain": {
-        "prosperity": "Revolutionary icon; economic disruption.",
-        "democracy": "Guerrilla tactics; anti-democratic outcomes.",
-        "scienceTech": "Medical background; limited tech impact.",
-        "space": "No direct role."
-      }
+        "explain": {
+          "prosperity": {
+            "domestic": "Led Cuban revolution, economic decline.",
+            "world": "Inspired global leftist movements that influenced economic policies and aid networks in allied countries."
+          },
+          "democracy": {
+            "domestic": "Suppressed dissent, one-party rule.",
+            "world": "Symbol of anti-imperialism worldwide."
+          },
+          "scienceTech": {
+            "domestic": "Promoted medicine, little tech change.",
+            "world": "Icon for global medical activism."
+          },
+          "space": {
+            "domestic": "No direct space impact.",
+            "world": "No global space influence."
+          }
+        }
     },
-    {
-      "id": "john-lennon",
-      "name": "John Lennon",
-      "country": "United Kingdom",
-      "scores": {
-        "domestic": {
-          "prosperity": 30,
-          "democracy": 15,
-          "scienceTech": 5,
-          "space": 0
+
+      {
+        "id": "john-lennon",
+        "name": "John Lennon",
+        "country": "United Kingdom",
+        "scores": {
+          "domestic": { "prosperity": 6, "democracy": 5, "scienceTech": 4, "space": 1 },
+          "world":    { "prosperity": 7, "democracy": 6, "scienceTech": 5, "space": 1 }
         },
-        "world": {
-          "prosperity": 35,
-          "democracy": 20,
-          "scienceTech": 5,
-          "space": 0
+        "explain": {
+          "prosperity": {
+            "domestic": "Boosted UK music/culture economy.",
+            "world": "Scaled UK music exports and cultural industries, shaping global music markets and creative commerce."
+          },
+          "democracy": {
+            "domestic": "Challenged authority, promoted peace.",
+            "world": "Inspired global protest/peace movements."
+          },
+          "scienceTech": {
+            "domestic": "Advanced UK music tech/recording.",
+            "world": "Influenced global music production."
+          },
+          "space": {
+            "domestic": "No direct impact.",
+            "world": "No direct impact."
+          }
         }
       },
-      "explain": {
-        "prosperity": "Major economic impact via music industry, global sales, and cultural exports, but not a direct driver of macroeconomic change.",
-        "democracy": "Advocated for peace, anti-war activism, and civil rights, but with limited direct institutional effect.",
-        "scienceTech": "No direct contributions, but some influence on media technology and recording innovation through The Beatles.",
-        "space": "No direct or indirect impact on space or space policy."
-      }
-    },
     {
       "id": "karl-marx",
       "name": "Karl Marx",
@@ -275,18 +338,24 @@
           "space": 0
         }
       },
-      "explain": {
-        "prosperity": "Critique of capitalism inspired revolutions, but implementations led to economic hardship in many countries.",
-        "democracy": "Advocated for classless society, but real-world applications often resulted in authoritarian regimes.",
-        "scienceTech": "Influenced social sciences and economics, but limited direct impact on technology.",
-        "space": "No direct contribution to space or related fields."
-      },
-      "explain_world": {
-        "prosperity": "Global influence on economic systems, but often associated with stagnation or decline.",
-        "democracy": "Inspired global movements, but frequently led to suppression of political freedoms.",
-        "scienceTech": "Major impact on social theory and academic thought worldwide.",
-        "space": "No global impact on space exploration or technology."
-      }
+        "explain": {
+          "prosperity": {
+            "domestic": "Critiqued capitalism, inspired revolutions.",
+            "world": "Ideas reshaped economic thought worldwide, influencing state policies, labor movements, and international economic alignments."
+          },
+          "democracy": {
+            "domestic": "Classless society ideal, led to authoritarianism.",
+            "world": "Inspired movements, often suppressed freedoms."
+          },
+          "scienceTech": {
+            "domestic": "Influenced social sciences, limited tech impact.",
+            "world": "Major impact on global social theory."
+          },
+          "space": {
+            "domestic": "No direct space impact.",
+            "world": "No global space influence."
+          }
+        }
     },
     {
       "id": "margaret-thatcher",
@@ -306,12 +375,24 @@
           "space": 5
         }
       },
-      "explain": {
-        "prosperity": "Led major economic reforms, privatization, and deregulation.",
-        "democracy": "Strengthened executive power, divisive on labor and civil rights.",
-        "scienceTech": "Promoted R&D but cut some public science funding.",
-        "space": "Limited direct impact; supported UK satellite/defense initiatives."
-      }
+        "explain": {
+          "prosperity": {
+            "domestic": "Privatized, deregulated, reformed economy.",
+            "world": "Exported privatization and liberalization models that influenced global capital flows and policy reform agendas."
+          },
+          "democracy": {
+            "domestic": "Strengthened executive, divisive on labor.",
+            "world": "Symbol of conservative leadership abroad."
+          },
+          "scienceTech": {
+            "domestic": "Promoted R&D, cut public science funding.",
+            "world": "Encouraged global science investment."
+          },
+          "space": {
+            "domestic": "Supported UK satellite/defense work.",
+            "world": "Minor influence on ESA/space policy."
+          }
+        }
     },
     {
       "id": "emmanuel-macron",
@@ -331,12 +412,24 @@
           "space": 4.5
         }
       },
-      "explain": {
-        "prosperity": "Oversaw economic reforms and labor market changes, with mixed results for growth and unemployment.",
-        "democracy": "Defended liberal democracy in France and the EU, but faced criticism over protests and police response.",
-        "scienceTech": "Promoted tech startups and AI, invested in research, but France lags global leaders.",
-        "space": "Supported ESA and French space sector, but no major new initiatives."
-      }
+        "explain": {
+          "prosperity": {
+            "domestic": "Economic reforms, mixed growth/unemployment.",
+            "world": "Promoted EU economic coordination and cross-border investment policies that affected regional markets."
+          },
+          "democracy": {
+            "domestic": "Defended liberal democracy, faced protests.",
+            "world": "Promoted EU democratic values abroad."
+          },
+          "scienceTech": {
+            "domestic": "Promoted tech, AI, research investment.",
+            "world": "Advanced EU tech/AI policy globally."
+          },
+          "space": {
+            "domestic": "Supported French/ESA space sector.",
+            "world": "Minor global space policy influence."
+          }
+        }
     },
     {
       "id": "joe-biden",
@@ -356,12 +449,24 @@
           "space": 18
         }
       },
-      "explain": {
-        "prosperity": "Oversaw post-pandemic recovery, major infrastructure and climate bills, but faced inflation and economic uncertainty.",
-        "democracy": "Defended election integrity and democratic norms, but faced polarization and institutional challenges.",
-        "scienceTech": "Increased funding for science, climate, and technology; promoted semiconductor and clean energy industries.",
-        "space": "Continued Artemis and commercial space support, but no major new initiatives."
-      }
+        "explain": {
+          "prosperity": {
+            "domestic": "Recovery, infrastructure, climate bills.",
+            "world": "Coordinated international climate and recovery policies that influenced green investment and global economic cooperation."
+          },
+          "democracy": {
+            "domestic": "Defended norms, faced polarization.",
+            "world": "Promoted democracy, rebuilt alliances."
+          },
+          "scienceTech": {
+            "domestic": "Boosted science, clean energy, chips.",
+            "world": "Advanced global science/climate policy."
+          },
+          "space": {
+            "domestic": "Continued Artemis, commercial space.",
+            "world": "Supported global space cooperation."
+          }
+        }
     },
     {
       "id": "george-washington",
@@ -381,11 +486,144 @@
           "space": 0
         }
       },
+        "explain": {
+          "prosperity": {
+            "domestic": "Founded US economy, stabilized finances.",
+            "world": "Provided a model for early republic economic systems and trade norms that influenced other new nations."
+          },
+          "democracy": {
+            "domestic": "Set peaceful transfer, limited power.",
+            "world": "Inspired global republicanism."
+          },
+          "scienceTech": {
+            "domestic": "Supported infrastructure, surveys.",
+            "world": "Limited global science impact."
+          },
+          "space": {
+            "domestic": "Pre-space era, no direct impact.",
+            "world": "No global space effect."
+          }
+        }
+    },
+    {
+      "id": "albert-einstein",
+      "name": "Albert Einstein",
+      "country": "Germany / United States",
+      "scores": {
+        "domestic": { "prosperity": 5, "democracy": 5, "scienceTech": 100, "space": 5 },
+        "world":    { "prosperity": 5, "democracy": 5, "scienceTech": 95, "space": 5 }
+      },
       "explain": {
-  "prosperity": "Established the United States' economic foundations, stabilized finances, promoted commerce, and set precedents for fiscal responsibility and national credit. His leadership enabled long-term prosperity for the new nation.",
-        "democracy": "Set precedents for peaceful transfer of power, republican governance, and limited executive authority.",
-        "scienceTech": "Supported infrastructure and survey efforts, but limited direct impact on science or technology.",
-        "space": "No direct impact; pre-space era."
+        "prosperity": { "domestic": "Limited direct economic policy impact.", "world": "Laid theoretical foundations that enabled modern technologies and industries." },
+        "democracy": { "domestic": "Public intellectual in Germany/US, limited political role.", "world": "Global scientific authority shaping education and norms." },
+        "scienceTech": { "domestic": "Revolutionized physics, major academic influence.", "world": "Transformed global science; enabled later technologies in computing and astrophysics." },
+        "space": { "domestic": "No direct program role.", "world": "Theoretical work later supported space/astrophysics advances." }
+      }
+    },
+    {
+      "id": "mahatma-gandhi",
+      "name": "Mahatma Gandhi",
+      "country": "India",
+      "scores": {
+        "domestic": { "prosperity": 10, "democracy": 85, "scienceTech": 2, "space": 0 },
+        "world":    { "prosperity": 5, "democracy": 90, "scienceTech": 1, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Social/economic reforms with limited macroeconomic uplift.", "world": "Inspired development and nonviolent economic discourse abroad." },
+        "democracy": { "domestic": "Led independence and mass civil disobedience to found democratic institutions.", "world": "Model for civil-rights and anti-colonial movements worldwide." },
+        "scienceTech": { "domestic": "Little direct tech impact.", "world": "Symbolic influence on social-science thought." },
+        "space": { "domestic": "No direct impact.", "world": "No global space impact." }
+      }
+    },
+    {
+      "id": "angela-merkel",
+      "name": "Angela Merkel",
+      "country": "Germany",
+      "scores": {
+        "domestic": { "prosperity": 65, "democracy": 70, "scienceTech": 45, "space": 10 },
+        "world":    { "prosperity": 60, "democracy": 80, "scienceTech": 40, "space": 5 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Steady economic stewardship and export-led growth.", "world": "Stabilized EU markets and encouraged cross-border investment." },
+        "democracy": { "domestic": "Long, stable democratic leadership with institutional respect.", "world": "EU leadership on democratic governance and crisis management." },
+        "scienceTech": { "domestic": "Supported German R&D and industry partnerships.", "world": "Promoted EU research collaboration and industrial policy." },
+        "space": { "domestic": "Supported national and ESA programs.", "world": "Minor influence on EU space policy." }
+      }
+    },
+    {
+      "id": "bill-gates",
+      "name": "Bill Gates",
+      "country": "United States",
+      "scores": {
+        "domestic": { "prosperity": 50, "democracy": 10, "scienceTech": 85, "space": 3 },
+        "world":    { "prosperity": 60, "democracy": 20, "scienceTech": 90, "space": 2 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Built large tech industry and jobs via Microsoft.", "world": "Global software platform and philanthropy shaped markets and health investment." },
+        "democracy": { "domestic": "Limited direct political influence; public philanthropy.", "world": "Philanthropic influence on global health and policy." },
+        "scienceTech": { "domestic": "Drove software era and platform economics.", "world": "Enabled global computing ecosystems and funded major R&D programs." },
+        "space": { "domestic": "No substantive space role.", "world": "No substantive space role." }
+      }
+    },
+    {
+      "id": "marie-curie",
+      "name": "Marie Curie",
+      "country": "Poland / France",
+      "scores": {
+        "domestic": { "prosperity": 5, "democracy": 5, "scienceTech": 85, "space": 0 },
+        "world":    { "prosperity": 5, "democracy": 5, "scienceTech": 80, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Academic and early-industry influence limited.", "world": "Medical and scientific applications (radiology) produced global health and economic effects." },
+        "democracy": { "domestic": "Scientific role, not political leadership.", "world": "Scientific leadership with symbolic gender-barrier impact." },
+        "scienceTech": { "domestic": "Pioneering radioactivity research in national labs.", "world": "Founded fields that transformed medicine and physics worldwide." },
+        "space": { "domestic": "No direct impact.", "world": "No direct impact." }
+      }
+    },
+    {
+      "id": "nikola-tesla",
+      "name": "Nikola Tesla",
+      "country": "Serbia / United States",
+      "scores": {
+        "domestic": { "prosperity": 10, "democracy": 0, "scienceTech": 70, "space": 0 },
+        "world":    { "prosperity": 15, "democracy": 0, "scienceTech": 75, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Commercial struggles limited national economic benefit.", "world": "AC power and related inventions had large global industrial impact." },
+        "democracy": { "domestic": "Not a political actor.", "world": "Not a political actor." },
+        "scienceTech": { "domestic": "Inventor contributions to electrical engineering.", "world": "Helped enable global electrification and later technologies." },
+        "space": { "domestic": "No direct impact.", "world": "No direct impact." }
+      }
+    }
+    ,
+    {
+      "id": "theodore-herzl",
+      "name": "Theodore Herzl",
+      "country": "Austria-Hungary",
+      "scores": {
+        "domestic": { "prosperity": 5, "democracy": 40, "scienceTech": 0, "space": 0 },
+        "world":    { "prosperity": 10, "democracy": 60, "scienceTech": 0, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Limited immediate economic effect; political advocacy.", "world": "Conceptual foundation for a state that later generated economic linkages and migration-driven commerce." },
+        "democracy": { "domestic": "Promoted national self-determination among Jews in Europe.", "world": "Inspired Zionist political movements and international diplomatic debates about nationhood." },
+        "scienceTech": { "domestic": "No direct impact.", "world": "No direct impact." },
+        "space": { "domestic": "No impact.", "world": "No impact." }
+      }
+    },
+    {
+      "id": "mother-teresa",
+      "name": "Mother Teresa",
+      "country": "Albania / India",
+      "scores": {
+        "domestic": { "prosperity": 5, "democracy": 10, "scienceTech": 0, "space": 0 },
+        "world":    { "prosperity": 5, "democracy": 30, "scienceTech": 0, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Charitable work provided local relief, limited macroeconomic effect.", "world": "Mobilized global charitable funding and NGOs, affecting aid flows and humanitarian networks." },
+        "democracy": { "domestic": "Worked within local institutions to aid the poor.", "world": "Symbol of global humanitarianism influencing civil-society and faith-based initiatives." },
+        "scienceTech": { "domestic": "No direct impact.", "world": "No direct impact." },
+        "space": { "domestic": "No impact.", "world": "No impact." }
       }
     }
   ]
