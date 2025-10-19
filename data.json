@@ -625,6 +625,111 @@
         "scienceTech": { "domestic": "No direct impact.", "world": "No direct impact." },
         "space": { "domestic": "No impact.", "world": "No impact." }
       }
+    },
+    {
+      "id": "jesus",
+      "name": "Jesus",
+      "country": "Israel",
+      "scores": {
+        "domestic": { "prosperity": 5, "democracy": 10, "scienceTech": 0, "space": 0 },
+        "world":    { "prosperity": 10, "democracy": 60, "scienceTech": 0, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Local charitable teachings, limited economic program.", "world": "Religious movement that shaped institutions, charity networks, and moral economies globally." },
+        "democracy": { "domestic": "Moral leadership and community formation.", "world": "Faith and institutions that influenced governance, law, and social norms worldwide." },
+        "scienceTech": { "domestic": "No direct impact.", "world": "No direct impact." },
+        "space": { "domestic": "No impact.", "world": "No impact." }
+      }
+    },
+    {
+      "id": "moses",
+      "name": "Moses",
+      "country": "Israel",
+      "scores": {
+        "domestic": { "prosperity": 10, "democracy": 40, "scienceTech": 0, "space": 0 },
+        "world":    { "prosperity": 5, "democracy": 55, "scienceTech": 0, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Led migrations and instituted economic rules for his community.", "world": "Legal and religious codes that influenced later economic and social systems." },
+        "democracy": { "domestic": "Lawgiver and institutional founder for his people.", "world": "Scriptural legal traditions that shaped later governance norms." },
+        "scienceTech": { "domestic": "No direct impact.", "world": "No direct impact." },
+        "space": { "domestic": "No impact.", "world": "No impact." }
+      }
+    },
+    {
+      "id": "muhammad",
+      "name": "Muhammad",
+      "country": "Saudi Arabia",
+      "scores": {
+        "domestic": { "prosperity": 20, "democracy": 45, "scienceTech": 0, "space": 0 },
+        "world":    { "prosperity": 30, "democracy": 50, "scienceTech": 0, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Unified tribes and established polity and economic order in Arabia.", "world": "Islamic civilization fostered trade, scholarship and commercial networks across Afro-Eurasia." },
+        "democracy": { "domestic": "Founded political-religious institutions and community governance.", "world": "Religious-political model that shaped law and institutions across many regions." },
+        "scienceTech": { "domestic": "No direct impact.", "world": "No direct impact." },
+        "space": { "domestic": "No impact.", "world": "No impact." }
+      }
+    },
+    {
+      "id": "mao-zedong",
+      "name": "Mao Zedong",
+      "country": "China",
+      "scores": {
+        "domestic": { "prosperity": -20, "democracy": -90, "scienceTech": 20, "space": 0 },
+        "world":    { "prosperity": -10, "democracy": -70, "scienceTech": 10, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Land reform and industrial campaigns but large-scale disruptions and famine.", "world": "Inspired revolutionary movements and altered Cold War economics and politics." },
+        "democracy": { "domestic": "Single-party rule and political campaigns that suppressed pluralism.", "world": "Model for revolutionary regimes with authoritarian practices." },
+        "scienceTech": { "domestic": "Some industrial/defense focus despite turmoil.", "world": "Limited positive global science spillovers during his era." },
+        "space": { "domestic": "No direct space program leadership.", "world": "No global space impact." }
+      }
+    },
+    {
+      "id": "deng-xiaoping",
+      "name": "Deng Xiaoping",
+      "country": "China",
+      "scores": {
+        "domestic": { "prosperity": 80, "democracy": -20, "scienceTech": 40, "space": 10 },
+        "world":    { "prosperity": 75, "democracy": -10, "scienceTech": 30, "space": 5 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Market reforms and opening drove China’s growth and poverty reduction.", "world": "Integrated China into global trade and FDI, reshaping supply chains and investment flows." },
+        "democracy": { "domestic": "Maintained one-party rule while liberalizing the economy.", "world": "Limited political liberalization while exporting economic model." },
+        "scienceTech": { "domestic": "Promoted technology and industrial modernization.", "world": "Facilitated China’s integration into global tech supply chains." },
+        "space": { "domestic": "Laid groundwork for later Chinese space ambitions.", "world": "Minor early global space influence." }
+      }
+    },
+    {
+      "id": "confucius",
+      "name": "Confucius",
+      "country": "Lu (China)",
+      "scores": {
+        "domestic": { "prosperity": 10, "democracy": 20, "scienceTech": 0, "space": 0 },
+        "world":    { "prosperity": 10, "democracy": 45, "scienceTech": 0, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Influenced bureaucracy and social order underpinning economic life.", "world": "Philosophy shaped governance, education and institutions across East Asia." },
+        "democracy": { "domestic": "Moral-political teachings that influenced statecraft.", "world": "Long-term influence on civil institutions and governance norms." },
+        "scienceTech": { "domestic": "No direct impact.", "world": "No direct impact." },
+        "space": { "domestic": "No impact.", "world": "No impact." }
+      }
+    },
+    {
+      "id": "genghis-khan",
+      "name": "Genghis Khan",
+      "country": "Mongolia",
+      "scores": {
+        "domestic": { "prosperity": 40, "democracy": -90, "scienceTech": 10, "space": 0 },
+        "world":    { "prosperity": 35, "democracy": -80, "scienceTech": 5, "space": 0 }
+      },
+      "explain": {
+        "prosperity": { "domestic": "Consolidated tribes and built a vast state; warfare reshaped local economies.", "world": "Pax Mongolica and trade corridor development expanded Eurasian commerce and cultural exchange." },
+        "democracy": { "domestic": "Autocratic conquest-driven rule.", "world": "Imperial systems and governance methods spread across conquered regions." },
+        "scienceTech": { "domestic": "Military and administrative innovations.", "world": "Facilitated transmission of technology and ideas across Eurasia." },
+        "space": { "domestic": "No impact.", "world": "No impact." }
+      }
     }
   ]
 }
