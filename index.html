@@ -44,11 +44,107 @@
 <main>
   <section>
     <div id="weights-ui" style="margin-bottom:18px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;">
-      <span style="font-size:15px;color:var(--muted);margin-right:8px;">Adjust weights:</span>
-      <label>Prosperity <input type="number" id="wP" min="0" max="1" step="0.01" style="width:60px;" value="0.45"></label>
-      <label>Democracy <input type="number" id="wD" min="0" max="1" step="0.01" style="width:60px;" value="0.10"></label>
-      <label>Science & Tech <input type="number" id="wS" min="0" max="1" step="0.01" style="width:60px;" value="0.35"></label>
-      <label>Space <input type="number" id="wSp" min="0" max="1" step="0.01" style="width:60px;" value="0.10"></label>
+  <span style="font-size:14px;color:var(--accent);margin-right:8px;font-weight:700;">Adjust weights:</span>
+      <label>Prosperity
+        <select id="wP" style="width:80px;">
+          <option>0</option>
+          <option>5</option>
+          <option>10</option>
+          <option>15</option>
+          <option>20</option>
+          <option>25</option>
+          <option>30</option>
+          <option>35</option>
+          <option>40</option>
+          <option>45</option>
+          <option>50</option>
+          <option>55</option>
+          <option>60</option>
+          <option>65</option>
+          <option>70</option>
+          <option>75</option>
+          <option>80</option>
+          <option>85</option>
+          <option>90</option>
+          <option>95</option>
+          <option>100</option>
+        </select>%
+      </label>
+      <label>Democracy
+        <select id="wD" style="width:80px;">
+          <option>0</option>
+          <option>5</option>
+          <option>10</option>
+          <option>15</option>
+          <option>20</option>
+          <option>25</option>
+          <option>30</option>
+          <option>35</option>
+          <option>40</option>
+          <option>45</option>
+          <option>50</option>
+          <option>55</option>
+          <option>60</option>
+          <option>65</option>
+          <option>70</option>
+          <option>75</option>
+          <option>80</option>
+          <option>85</option>
+          <option>90</option>
+          <option>95</option>
+          <option>100</option>
+        </select>%
+      </label>
+      <label>Science & Tech
+        <select id="wS" style="width:80px;">
+          <option>0</option>
+          <option>5</option>
+          <option>10</option>
+          <option>15</option>
+          <option>20</option>
+          <option>25</option>
+          <option>30</option>
+          <option>35</option>
+          <option>40</option>
+          <option>45</option>
+          <option>50</option>
+          <option>55</option>
+          <option>60</option>
+          <option>65</option>
+          <option>70</option>
+          <option>75</option>
+          <option>80</option>
+          <option>85</option>
+          <option>90</option>
+          <option>95</option>
+          <option>100</option>
+        </select>%
+      </label>
+      <label>Space
+        <select id="wSp" style="width:80px;">
+          <option>0</option>
+          <option>5</option>
+          <option>10</option>
+          <option>15</option>
+          <option>20</option>
+          <option>25</option>
+          <option>30</option>
+          <option>35</option>
+          <option>40</option>
+          <option>45</option>
+          <option>50</option>
+          <option>55</option>
+          <option>60</option>
+          <option>65</option>
+          <option>70</option>
+          <option>75</option>
+          <option>80</option>
+          <option>85</option>
+          <option>90</option>
+          <option>95</option>
+          <option>100</option>
+        </select>%
+      </label>
       <span id="weights-warning" style="color:var(--red);font-size:13px;display:none;margin-left:12px;">Weights must sum to 1.00</span>
       <div style="margin-left:auto;">
         <div style="background:linear-gradient(90deg,#07212b, #0b2532); padding:8px 12px; border-radius:10px; border:1px solid #1e474f; font-weight:700; color:var(--fg);">Click a row to see the per-variable rationale.</div>
@@ -151,7 +247,7 @@ let weights = { prosperity: 0.45, democracy: 0.10, scienceTech: 0.35, space: 0.1
       if (!country) return '';
       const map = {
         'united states': '🇺🇸', 'usa': '🇺🇸', 'us': '🇺🇸',
-        'austria': '🇦🇹', 'austria-hungary': '🇦🇹', 'hungary': '🇭🇺',
+  'austria': '🇦🇹', 'austria-hungary': '🇦🇹', 'hungary': '🇭🇺', 'saudi arabia': '🇸🇦', 'saudi': '🇸🇦',
         'russia': '🇷🇺', 'ru': '🇷🇺',
         'cuba / latin america': '🇨🇺', 'cuba': '🇨🇺', 'cu': '🇨🇺',
         'israel': '🇮🇱', 'il': '🇮🇱',
@@ -229,7 +325,7 @@ let weights = { prosperity: 0.45, democracy: 0.10, scienceTech: 0.35, space: 0.1
       if (!country) return '';
       const map = {
         'united states': '🇺🇸', 'usa': '🇺🇸', 'us': '🇺🇸',
-        'austria': '🇦🇹', 'austria-hungary': '🇦🇹', 'hungary': '🇭🇺',
+  'austria': '🇦🇹', 'austria-hungary': '🇦🇹', 'hungary': '🇭🇺', 'saudi arabia': '🇸🇦', 'saudi': '🇸🇦',
         'russia': '🇷🇺', 'ru': '🇷🇺',
         'cuba / latin america': '🇨🇺', 'cuba': '🇨🇺', 'cu': '🇨🇺',
         'israel': '🇮🇱', 'il': '🇮🇱',
@@ -285,17 +381,19 @@ let weights = { prosperity: 0.45, democracy: 0.10, scienceTech: 0.35, space: 0.1
 
   // Weights UI logic
   function updateWeights() {
-    const wP = parseFloat(document.getElementById('wP').value);
-    const wD = parseFloat(document.getElementById('wD').value);
-    const wS = parseFloat(document.getElementById('wS').value);
-    const wSp = parseFloat(document.getElementById('wSp').value);
-    const sum = wP + wD + wS + wSp;
-    if (Math.abs(sum - 1) > 0.01) {
+    const wPp = parseInt(document.getElementById('wP').value, 10);
+    const wDp = parseInt(document.getElementById('wD').value, 10);
+    const wSpc = parseInt(document.getElementById('wS').value, 10);
+    const wSpp = parseInt(document.getElementById('wSp').value, 10);
+    const sum = wPp + wDp + wSpc + wSpp;
+    if (sum !== 100) {
       document.getElementById('weights-warning').style.display = '';
       return;
     } else {
       document.getElementById('weights-warning').style.display = 'none';
     }
+    // convert percent to 0-1
+    const wP = wPp/100, wD = wDp/100, wS = wSpc/100, wSp = wSpp/100;
     weights = { prosperity: wP, democracy: wD, scienceTech: wS, space: wSp };
     // Find largest weight and set sortKey to its world column
     const weightMap = [
@@ -309,16 +407,17 @@ let weights = { prosperity: 0.45, democracy: 0.10, scienceTech: 0.35, space: 0.1
     sortDir = -1;
     render();
   }
-  document.getElementById('wP').addEventListener('input', updateWeights);
-  document.getElementById('wD').addEventListener('input', updateWeights);
-  document.getElementById('wS').addEventListener('input', updateWeights);
-  document.getElementById('wSp').addEventListener('input', updateWeights);
+  document.getElementById('wP').addEventListener('change', updateWeights);
+  document.getElementById('wD').addEventListener('change', updateWeights);
+  document.getElementById('wS').addEventListener('change', updateWeights);
+  document.getElementById('wSp').addEventListener('change', updateWeights);
 
   // Initialize weights UI with loaded weights
-  document.getElementById('wP').value = weights.prosperity;
-  document.getElementById('wD').value = weights.democracy;
-  document.getElementById('wS').value = weights.scienceTech;
-  document.getElementById('wSp').value = weights.space;
+  // Initialize select values (convert 0-1 to percent)
+  document.getElementById('wP').value = Math.round(weights.prosperity*100);
+  document.getElementById('wD').value = Math.round(weights.democracy*100);
+  document.getElementById('wS').value = Math.round(weights.scienceTech*100);
+  document.getElementById('wSp').value = Math.round(weights.space*100);
 
   render();
 })();
